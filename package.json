@@ -1,0 +1,36 @@
+{
+  "name": "peercodereview",
+  "version": "1.0.0",
+  "description": "Code Review tool built to help educate new students to programming on how to do code reviews and also encourage collaboration between novice developers",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/liamgreig1/PeerCodeReview.git"
+  },
+  "keywords": [
+    "RESTful",
+    "API",
+    "CodeReview",
+    "NodeJS"
+  ],
+  "author": "Liam Greig",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/liamgreig1/PeerCodeReview/issues"
+  },
+  "homepage": "https://github.com/liamgreig1/PeerCodeReview#readme",
+  "devDependencies": {
+    "eslint": "^7.19.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-import": "^2.22.1",
+    "nodemon": "^2.0.7"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongoose": "^5.11.15"
+  }
+}
