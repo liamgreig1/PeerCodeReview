@@ -17,15 +17,20 @@ exports.list_all_users = function(req, res) {
     });
 };
 
-function check(field, uname, callback) {
-    User.countDocuments({field:uname}, function(err, user){
+function checkUser(uname, callback) {
+    User.countDocuments({username:uname}, function(err, user){
+        callback(err, !! user);
+    })
+}
+
+function checkEmail(email, callback) {
+    User.countDocuments({email:email}, function(err, user){
         callback(err, !! user);
     })
 }
 
 exports.doesUserExist = function(req, res){
-    const username = "username";
-    check(username, req.body.username, function(err,exists){
+    checkUser(req.body.username, function(err,exists){
         if(err){
             res.json({ success: false, msg: err });
         }
@@ -38,8 +43,7 @@ exports.doesUserExist = function(req, res){
 }
 
 exports.doesEmailExist = function(req, res){
-    const email = "email";
-    check(email, req.body.email, function(err,exists){
+    checkEmail(req.body.email, function(err,exists){
         if(err){
             res.json({ success: false, msg: err });
         }
@@ -51,7 +55,7 @@ exports.doesEmailExist = function(req, res){
     })
 }
 
-exports.create_a_user = function(req,res) {
+exports.create_a_user = function(req,res, err) {
 
     if(passwordStrength(req.body.password).id == 0){
         return res.json({ success: false, msg: "Password entered is considered to be weak\nPassword must contain\nAt least 1 lowercase alphabetical character\n1 upper case alphabetical character\n1 numceric character\n1 special character\nMust be longer than 6 characters" });
@@ -61,14 +65,19 @@ exports.create_a_user = function(req,res) {
     const salt = saltHash.salt;
     const hash = saltHash.hash;
 
-    const newUser = new User({
-        username: req.body.username,
-        hash: hash,
-        salt: salt,
-        email: req.body.email,
-        reputationscore: 0,
-        title: req.body.title
-    });
+    
+        const newUser = new User({
+            username: req.body.username,
+            hash: hash,
+            salt: salt,
+            email: req.body.email,
+            reputationscore: 0,
+            title: req.body.title
+        });
+
+    if(err){
+        res.json({ success: false, msg: err });
+    }
 
     try {
         newUser.save()

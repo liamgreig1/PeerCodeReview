@@ -3,10 +3,16 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var UserSchema = new Schema({
-    username: String,
+    username: {
+        type: String
+        //,unique: true
+    },
     hash: String,
     salt: String,
-    email: String,
+    email: {
+        type: String
+        //,unique : true
+    },
     reputationScore: Number,
     title: String
 });
