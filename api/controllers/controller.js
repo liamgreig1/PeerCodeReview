@@ -60,31 +60,28 @@ exports.create_a_user = function(req,res, err) {
     if(passwordStrength(req.body.password).id == 0){
         return res.json({ success: false, msg: "Password entered is considered to be weak\nPassword must contain\nAt least 1 lowercase alphabetical character\n1 upper case alphabetical character\n1 numceric character\n1 special character\nMust be longer than 6 characters" });
     }
-    const saltHash = utils.genPassword(req.body.password);
 
+    const saltHash = utils.genPassword(req.body.password);
+    
     const salt = saltHash.salt;
     const hash = saltHash.hash;
 
-    
-        const newUser = new User({
-            username: req.body.username,
-            hash: hash,
-            salt: salt,
-            email: req.body.email,
-            reputationscore: 0,
-            title: req.body.title
-        });
-
-    if(err){
-        res.json({ success: false, msg: err });
-    }
+    const newUser = new User({
+        username: req.body.username,
+        hash: hash,
+        salt: salt,
+        email: req.body.email,
+        reputationscore: 0,
+        title: req.body.title
+    });
 
     try {
+    
         newUser.save()
             .then((user) => {
                 res.json({ success: true, user: user });
-        });
-        
+            });
+
     } catch (err) {
         res.json({ success: false, msg: err });
     
