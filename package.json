@@ -38,6 +38,7 @@
     "mocha": "^8.3.0",
     "mongoose": "^5.11.15",
     "passport": "^0.4.1",
+    "passport-jwt": "^4.0.0",
     "supertest": "^6.1.3"
   }
 }
