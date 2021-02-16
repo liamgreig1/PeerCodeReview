@@ -4,8 +4,9 @@
   "description": "Code Review tool built to help educate new students to programming on how to do code reviews and also encourage collaboration between novice developers",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon server.js"
+    "start": "nodemon server.js",
+    "test": "./node_modules/.bin/mocha",
+    "db": "mongod --dbpath /usr/local/var/mongodb/ --rest"
   },
   "repository": {
     "type": "git",
@@ -27,10 +28,16 @@
     "nodemon": "^2.0.7"
   },
   "dependencies": {
+    "chai": "^4.3.0",
+    "chai-http": "^4.3.0",
     "check-password-strength": "^1.0.15",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
-    "mongoose": "^5.11.15"
+    "jsonwebtoken": "^8.5.1",
+    "mocha": "^8.3.0",
+    "mongoose": "^5.11.15",
+    "passport": "^0.4.1",
+    "supertest": "^6.1.3"
   }
 }
