@@ -6,8 +6,7 @@ var UserSchema = new Schema({
     username: String,
     hash: String,
     salt: String,
-    reputationScore: Number,
-    title: String
+    reputationScore: Number
 });
 
 module.exports = mongoose.model('user', UserSchema);

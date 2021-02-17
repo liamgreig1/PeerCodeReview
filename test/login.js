@@ -24,8 +24,7 @@ describe('user', () => {
             let user = {
                 username: "lgreig200",
                 password: "P4sSw0Rd!",
-                score: 0,
-                title: "Student"
+                score: 0
             }
             chai.request(server)
                 .post('/user/register')
@@ -49,8 +48,7 @@ describe('user', () => {
             let user = {
                 username: "lgreig201",
                 password: "Passw0rd!",
-                score: 0,
-                title: "Student"
+                score: 0
             }
             chai.request(server)
                 .post('/user/register')
@@ -74,14 +72,12 @@ describe('user', () => {
             let user = {
                 username: "lgreig203",
                 password: "Passw0rd!",
-                score: 0,
-                title: "Student"
+                score: 0
             }
             let wrongPassword = {
                 username: "lgreig203",
                 password: "P5sSw0Rd!",
-                score: 0,
-                title: "Student"
+                score: 0
             }
             chai.request(server)
                 .post('/user/register')
@@ -106,14 +102,12 @@ describe('user', () => {
             let user = {
                 username: "lgreig200",
                 password: "P5sSw0Rd!",
-                score: 0,
-                title: "Student"
+                score: 0
             }
             let wrongPassword = {
                 username: "lgreig203",
                 password: "P5sSw0Rd!",
-                score: 0,
-                title: "Student"
+                score: 0
             }
             chai.request(server)
                 .post('/user/register')
@@ -138,14 +132,12 @@ describe('user', () => {
             let user = {
                 username: "lgreig200",
                 password: "P5sSw0Rd!",
-                score: 0,
-                title: "Student"
+                score: 0
             }
             let wrongPassword = {
                 username: "lgreig203",
                 password: "P4sSw0Rd!",
-                score: 0,
-                title: "Student"
+                score: 0
             }
             chai.request(server)
                 .post('/user/register')

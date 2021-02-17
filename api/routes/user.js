@@ -70,8 +70,7 @@ router.post('/register', function(req, res, next){
                 username: req.body.username,
                 hash: hash,
                 salt: salt,
-                reputationscore: req.body.score,
-                title: req.body.title
+                reputationscore: req.body.score
             });
             try {
                 newUser.save()

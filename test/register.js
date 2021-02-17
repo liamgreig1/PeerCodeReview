@@ -24,8 +24,7 @@ describe('user', () => {
             let user = {
                 username: "lgreig200",
                 password: "P4sSw0Rd!",
-                score: 0,
-                title: "Student"
+                score: 0
             }
           chai.request(server)
               .post('/user/register')
@@ -42,8 +41,7 @@ describe('user', () => {
             let user = {
                 username: "lgreig201",
                 password: "Passw0rd!",
-                score: 0,
-                title: "Student"
+                score: 0
             }
           chai.request(server)
               .post('/user/register')
@@ -60,8 +58,7 @@ describe('user', () => {
             let user = {
                 username: "lgreig202",
                 password: "Pass",
-                score: 0,
-                title: "Student"
+                score: 0
             }
           chai.request(server)
               .post('/user/register')
@@ -79,8 +76,7 @@ describe('user', () => {
             let user = {
                 username: "lgreig202",
                 password: "Password1",
-                score: 0,
-                title: "Student"
+                score: 0
             }
           chai.request(server)
               .post('/user/register')
@@ -98,8 +94,7 @@ describe('user', () => {
             let user = {
                 username: "lgreig200",
                 password: "P4sSw0Rd!",
-                score: 0,
-                title: "Student"
+                score: 0
             }
             chai.request(server)
             .post('/user/register')
