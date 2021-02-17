@@ -28,7 +28,7 @@ describe('user', () => {
                 title: "Student"
             }
           chai.request(server)
-              .post('/register')
+              .post('/user/register')
               .send(user)
               .end((err, res) => {
                     res.body.should.be.a('object');
@@ -46,7 +46,7 @@ describe('user', () => {
                 title: "Student"
             }
           chai.request(server)
-              .post('/register')
+              .post('/user/register')
               .send(user)
               .end((err, res) => {
                     res.body.should.be.a('object');
@@ -64,7 +64,7 @@ describe('user', () => {
                 title: "Student"
             }
           chai.request(server)
-              .post('/register')
+              .post('/user/register')
               .send(user)
               .end((err, res) => {
                     res.body.should.be.a('object');
@@ -83,7 +83,7 @@ describe('user', () => {
                 title: "Student"
             }
           chai.request(server)
-              .post('/register')
+              .post('/user/register')
               .send(user)
               .end((err, res) => {
                     res.body.should.be.a('object');
@@ -102,7 +102,7 @@ describe('user', () => {
                 title: "Student"
             }
             chai.request(server)
-            .post('/register')
+            .post('/user/register')
             .send(user)
             .end((err, res) => {
                   res.body.should.be.a('object');
@@ -110,7 +110,7 @@ describe('user', () => {
                   done();
             });
             chai.request(server)
-            .post('/register')
+            .post('/user/register')
             .send(user)
             .end((err, res) => {
                   res.body.should.be.a('object');

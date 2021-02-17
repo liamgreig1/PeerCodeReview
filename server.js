@@ -30,8 +30,7 @@ app.use(cors());
 // When you run `ng build`, the output will go to the ./public directory
 app.use(express.static(path.join(__dirname, 'public')));
 
-var routes = require('./api/routes/routes'); //importing route
-routes(app); //register the route
+app.use(require('./api/routes'));
 
 app.listen(3000);
 

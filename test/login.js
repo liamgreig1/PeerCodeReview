@@ -28,13 +28,13 @@ describe('user', () => {
                 title: "Student"
             }
             chai.request(server)
-                .post('/register')
+                .post('/user/register')
                 .send(user)
                 .end((err, res) => {
                     res.body.should.be.a('object');
                     res.body.should.have.property('success').eql(true);
                     chai.request(server)
-                        .post('/login')
+                        .post('/user/login')
                         .send(user)
                         .end((err, res) => {
                             res.body.should.be.a('object');
@@ -53,13 +53,13 @@ describe('user', () => {
                 title: "Student"
             }
             chai.request(server)
-                .post('/register')
+                .post('/user/register')
                 .send(user)
                 .end((err, res) => {
                     res.body.should.be.a('object');
                     res.body.should.have.property('success').eql(true);
                     chai.request(server)
-                        .post('/login')
+                        .post('/user/login')
                         .send(user)
                         .end((err, res) => {
                             res.body.should.be.a('object');
@@ -84,13 +84,13 @@ describe('user', () => {
                 title: "Student"
             }
             chai.request(server)
-                .post('/register')
+                .post('/user/register')
                 .send(user)
                 .end((err, res) => {
                     res.body.should.be.a('object');
                     res.body.should.have.property('success').eql(true);
                     chai.request(server)
-                        .post('/login')
+                        .post('/user/login')
                         .send(wrongPassword)
                         .end((err, res) => {
                             res.body.should.be.a('object');
@@ -116,13 +116,13 @@ describe('user', () => {
                 title: "Student"
             }
             chai.request(server)
-                .post('/register')
+                .post('/user/register')
                 .send(user)
                 .end((err, res) => {
                     res.body.should.be.a('object');
                     res.body.should.have.property('success').eql(true);
                     chai.request(server)
-                        .post('/login')
+                        .post('/user/login')
                         .send(wrongPassword)
                         .end((err, res) => {
                             res.body.should.be.a('object');
@@ -148,13 +148,13 @@ describe('user', () => {
                 title: "Student"
             }
             chai.request(server)
-                .post('/register')
+                .post('/user/register')
                 .send(user)
                 .end((err, res) => {
                     res.body.should.be.a('object');
                     res.body.should.have.property('success').eql(true);
                     chai.request(server)
-                        .post('/login')
+                        .post('/user/login')
                         .send(wrongPassword)
                         .end((err, res) => {
                             res.body.should.be.a('object');
