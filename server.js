@@ -11,7 +11,9 @@ var app = express();
 // Configures the database and opens a global connection that can be used in any module with `mongoose.connection`
 require('./config/database');
 
-require('./api/models/model'); //created model loading here
+//created model loading here
+require('./api/models/userModel'); 
+require('./api/models/codeModel');
 
 // Pass the global passport object into the configuration function
 require('./config/passport')(passport);
