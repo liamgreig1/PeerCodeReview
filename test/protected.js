@@ -13,7 +13,7 @@ let should = chai.should();
 
 chai.use(chaiHttp);
 
-describe('user', () => {
+describe('Protected', () => {
     beforeEach((done) => { //Before each test we empty the database
         User.deleteMany({}, (err) => {
            done();

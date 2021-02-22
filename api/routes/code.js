@@ -15,7 +15,6 @@ const passport = require('passport');
 router.post('/upload', passport.authenticate('jwt', { session: false }), (req, res, next) => {
 
     var upload = true;
-
     var filename = req.body.filename;
     var fileSize = req.body.filesize;
     var content = req.body.content;
@@ -37,7 +36,7 @@ router.post('/upload', passport.authenticate('jwt', { session: false }), (req, r
     .then((user) => {
         if (!user) {
             upload = false;
-            res.status(401).json({success: false, msg:"User does not exist"});
+            res.status(401).json({success: false, msg:"Author does not exist"});
         }
     });
 
@@ -45,7 +44,7 @@ router.post('/upload', passport.authenticate('jwt', { session: false }), (req, r
     .then((user) => {
         if (!user) {
             upload = false;
-            res.status(401).json({success: false, msg:"User does not exist"});
+            res.status(401).json({success: false, msg:"Reviewer does not exist"});
         }
     });
 
