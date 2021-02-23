@@ -6,6 +6,7 @@ let User = require('../api/models/userModel');
 let Code = require('../api/models/codeModel');
 
 //Require the dev-dependencies
+let jwt_decode = require('jwt-decode');
 let chai = require('chai');
 let chaiHttp = require('chai-http');
 let server = require('../server');
@@ -35,14 +36,6 @@ describe('Upload', () => {
                     password: "P4sSw0Rd!",
                     score: 0
                 }
-                let code = {
-                        filename: "HelloWorld.java",
-                        filesize: 117,
-                        content: "class HelloWorld {public static void main(String[] args) {System.out.println(\"Hello, World!\"); }}",
-                        author: "lgreig200",
-                        reviewer: "lclyne200",
-                        status: false
-                }
                 chai.request(server)
                 .post('/user/register')
                 .send(user)
@@ -62,6 +55,15 @@ describe('Upload', () => {
                                         res.body.should.be.a('object');
                                         res.body.should.have.property('success').eql(true);
                                         var token = res.body.token;
+                                        var decoded = jwt_decode(token);
+                                        let code = {
+                                            filename: "HelloWorld.java",
+                                            filesize: 117,
+                                            content: "class HelloWorld {public static void main(String[] args) {System.out.println(\"Hello, World!\"); }}",
+                                            author: decoded.sub,
+                                            reviewer: "lclyne200",
+                                            status: false
+                                    }
                                         chai.request(server)
                                             .post('/code/upload')
                                             .set('Authorization', token)

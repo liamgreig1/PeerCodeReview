@@ -27,16 +27,14 @@ router.post('/upload', passport.authenticate('jwt', { session: false }), (req, r
         res.status(401).json({success: false, msg:"File size exceeds 20kb."});
     }
 
-    if (author == reviewer) {
-        upload = false;
-        res.status(401).json({success: false, msg:"User can't assign themself as reviewer."})
-    }
-
-    User.findOne({username: author})
+    User.findOne({_id: author})
     .then((user) => {
         if (!user) {
             upload = false;
             res.status(401).json({success: false, msg:"Author does not exist"});
+        }
+        else{
+            author = user.username;
         }
     });
 
@@ -47,6 +45,11 @@ router.post('/upload', passport.authenticate('jwt', { session: false }), (req, r
             res.status(401).json({success: false, msg:"Reviewer does not exist"});
         }
     });
+
+    if (author == reviewer) {
+        upload = false;
+        res.status(401).json({success: false, msg:"User can't assign themself as reviewer."})
+    }
 
     if (upload == true) {
         const newCode = new Code({
