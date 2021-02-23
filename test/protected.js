@@ -2,7 +2,7 @@
 process.env.NODE_ENV = 'test';
 
 let mongoose = require("mongoose");
-let User = require('../api/models/model');
+let User = require('../api/models/userModel');
 
 //Require the dev-dependencies
 let chai = require('chai');
@@ -13,7 +13,7 @@ let should = chai.should();
 
 chai.use(chaiHttp);
 
-describe('user', () => {
+describe('Protected', () => {
     beforeEach((done) => { //Before each test we empty the database
         User.deleteMany({}, (err) => {
            done();

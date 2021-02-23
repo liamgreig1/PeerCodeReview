@@ -2,7 +2,7 @@
 process.env.NODE_ENV = 'test';
 
 let mongoose = require("mongoose");
-let User = require('../api/models/model');
+let User = require('../api/models/userModel');
 
 //Require the dev-dependencies
 let chai = require('chai');
@@ -13,9 +13,9 @@ let should = chai.should();
 
 chai.use(chaiHttp);
 
-describe('user', () => {
+describe('Login', () => {
     beforeEach((done) => { //Before each test we empty the database
-        User.deleteOne({}, (err) => {
+        User.deleteMany({}, (err) => {
            done();
         });
     })
@@ -23,8 +23,7 @@ describe('user', () => {
         it('Normal test to login user', (done) => {
             let user = {
                 username: "lgreig200",
-                password: "P4sSw0Rd!",
-                score: 0
+                password: "P4sSw0Rd!"
             }
             chai.request(server)
                 .post('/user/register')

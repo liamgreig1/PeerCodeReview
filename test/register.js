@@ -2,7 +2,7 @@
 process.env.NODE_ENV = 'test';
 
 let mongoose = require("mongoose");
-let User = require('../api/models/model');
+let User = require('../api/models/userModel');
 
 //Require the dev-dependencies
 let chai = require('chai');
@@ -13,12 +13,12 @@ let should = chai.should();
 
 chai.use(chaiHttp);
 
-describe('user', () => {
+describe('Register', () => {
     beforeEach((done) => { //Before each test we empty the database
         User.deleteMany({}, (err) => {
            done();
         });
-    })
+    });
     describe('/POST register', () => {
         it('Normal test to register user', (done) => {
             let user = {
@@ -102,16 +102,15 @@ describe('user', () => {
             .end((err, res) => {
                   res.body.should.be.a('object');
                   res.body.should.have.property('success').eql(true);
-                  done();
-            });
-            chai.request(server)
-            .post('/user/register')
-            .send(user)
-            .end((err, res) => {
-                  res.body.should.be.a('object');
-                  res.body.should.have.property('success').eql(false);
-                  res.body.should.have.property('msg').eql('User already exists');
-                  done();
+                  chai.request(server)
+                    .post('/user/register')
+                    .send(user)
+                    .end((err, res) => {
+                        res.body.should.be.a('object');
+                        res.body.should.have.property('success').eql(false);
+                        res.body.should.have.property('msg').eql('User already exists');
+                    });
+                done();
             });
         });
     });
