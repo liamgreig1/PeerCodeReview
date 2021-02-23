@@ -24,17 +24,21 @@ router.post('/upload', passport.authenticate('jwt', { session: false }), (req, r
 
     if(fileSize > 20480){
         upload = false;
-        res.status(401).json({success: false, msg:"File size exceeds 20kb."});
+        res.status(413).json({success: false, msg:"File size exceeds 20kb."});
     }
 
     User.findOne({_id: author})
     .then((user) => {
         if (!user) {
             upload = false;
-            res.status(401).json({success: false, msg:"Author does not exist"});
+            res.status(403).json({success: false, msg:"Author does not exist"});
         }
         else{
             author = user.username;
+            if (author == reviewer) {
+                upload = false;
+                res.status(401).json({success: false, msg:"User can't assign themself as reviewer."})
+            }
         }
     });
 
@@ -42,14 +46,9 @@ router.post('/upload', passport.authenticate('jwt', { session: false }), (req, r
     .then((user) => {
         if (!user) {
             upload = false;
-            res.status(401).json({success: false, msg:"Reviewer does not exist"});
+            res.status(400).json({success: false, msg:"Reviewer does not exist"});
         }
     });
-
-    if (author == reviewer) {
-        upload = false;
-        res.status(401).json({success: false, msg:"User can't assign themself as reviewer."})
-    }
 
     if (upload == true) {
         const newCode = new Code({
@@ -67,7 +66,7 @@ router.post('/upload', passport.authenticate('jwt', { session: false }), (req, r
                 res.status(200).json({ success: true, code: code });
             });
         } catch (err) {
-            res.status(401).json({ success: false, msg: err });
+            res.status(400).json({ success: false, msg: err });
         }
     }
 
