@@ -25,7 +25,8 @@
   },
   "homepage": "https://github.com/liamgreig1/PeerCodeReview#readme",
   "devDependencies": {
-    "nodemon": "^2.0.7"
+    "nodemon": "^2.0.7",
+    "typescript": "^4.1.5"
   },
   "dependencies": {
     "chai": "^4.3.0",
