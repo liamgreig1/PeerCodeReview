@@ -4,6 +4,7 @@ const User = mongoose.model('user');
 const passport = require('passport');
 const passwordStrength = require('check-password-strength');
 const utils = require('../../lib/utils');
+const sanitize = require('mongo-sanitize');
 
 /**
  * To log user into the application and assign JavaScript Web Token for authentication purposes
@@ -50,38 +51,78 @@ router.post('/login', function(req, res, next){
  */
 // http://localhost:3000/user/register
 router.post('/register', function(req, res, next){
+    var addUser = true;
+
     User.findOne({username: req.body.username})
     .then((user) => {
         if (user) {
+            addUser = false;
             res.status(403).json({ success: false, msg: "User already exists" });
         }else{
             if(passwordStrength(req.body.password).id <= 1){
+                addUser = false;
                 res.status(400).json({ success: false, msg: "Password entered is considered to be weak. " +
                  "Password must contain At least 1 lowercase alphabetical character. 1 upper case alphabetical character. " +
                  "Numceric character. Special character and must be longer than 8 characters" });
             }
-        
-            const saltHash = utils.genPassword(req.body.password);
+
+            if(addUser == true){
+                const saltHash = utils.genPassword(req.body.password);
             
-            const salt = saltHash.salt;
-            const hash = saltHash.hash;
-        
-            const newUser = new User({
-                username: req.body.username,
-                hash: hash,
-                salt: salt,
-                reputationscore: req.body.score
-            });
-            try {
-                newUser.save()
-                    .then((user) => {
-                        res.status(201).json({ success: true, user: user });
-                    });
-        
-            } catch (err) {
-                res.status(400).json({ success: false, msg: err });
+                const salt = saltHash.salt;
+                const hash = saltHash.hash;
             
+                const newUser = new User({
+                    username: req.body.username,
+                    hash: hash,
+                    salt: salt,
+                    reputationscore: req.body.score
+                });
+                try {
+                    newUser.save()
+                        .then((user) => {
+                            res.status(201).json({ success: true, user: user });
+                        });
+            
+                } catch (err) {
+                    res.status(400).json({ success: false, msg: err });
+                
+                }
             }
+        }
+    })
+});
+// http://localhost:3000/user/userexists
+router.post('/userexists', passport.authenticate('jwt', { session: false }), (req, res, next) => {
+    User.findOne({username: req.body.username},{username:1})
+    .then((user) => {
+        if (user){
+            res.status(200).json({ success: true, msg: user});
+        }
+        else{
+            res.status(400).json({ success: false, msg: "User does not exist"});
+        }
+    })
+});
+
+// http://localhost:3000/user/useridexists
+router.post('/useridexists', passport.authenticate('jwt', { session: false }), (req, res, next) => {
+    User.findOne({_id: req.body._id},{username:1})
+    .then((user) => {
+        if (user){
+            res.status(200).json({ success: true, msg: user});
+        }
+        else{
+            res.status(400).json({ success: false, msg: "User does not exist"});
+        }
+    })
+});
+// http://localhost:3000/user/listofusers
+router.get('/listofusers', passport.authenticate('jwt', { session: false }), (req, res, next) => {
+    User.find({},{username:1})
+    .then((list) => {
+        if(list.length>0){
+            res.status(200).json({ success: true, msg:list})
         }
     })
 });

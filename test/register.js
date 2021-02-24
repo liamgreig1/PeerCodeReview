@@ -32,7 +32,7 @@ describe('Register', () => {
               .end((err, res) => {
                     res.body.should.be.a('object');
                     res.body.should.have.property('success').eql(true);
-                done();
+                    done();
               });
         });
     });
@@ -49,7 +49,7 @@ describe('Register', () => {
               .end((err, res) => {
                     res.body.should.be.a('object');
                     res.body.should.have.property('success').eql(true);
-                done();
+                    done();
               });
         });
     });
@@ -67,32 +67,14 @@ describe('Register', () => {
                     res.body.should.be.a('object');
                     res.body.should.have.property('success').eql(false);
                     res.body.should.have.property('msg').eql('Password entered is considered to be weak. Password must contain At least 1 lowercase alphabetical character. 1 upper case alphabetical character. Numceric character. Special character and must be longer than 8 characters');
-                done();
+                    done();
               });
         });
     });
     describe('/POST register', () => {
-        it('Exceptional 2 test Password complexity', (done) => {
+        it('Exceptional 2 test user exists', (done) => {
             let user = {
-                username: "lgreig202",
-                password: "Password1",
-                score: 0
-            }
-          chai.request(server)
-              .post('/user/register')
-              .send(user)
-              .end((err, res) => {
-                    res.body.should.be.a('object');
-                    res.body.should.have.property('success').eql(false);
-                    res.body.should.have.property('msg').eql('Password entered is considered to be weak. Password must contain At least 1 lowercase alphabetical character. 1 upper case alphabetical character. Numceric character. Special character and must be longer than 8 characters');
-                done();
-              });
-        });
-    });
-    describe('/POST register', () => {
-        it('Exceptional 3 test user exists', (done) => {
-            let user = {
-                username: "lgreig200",
+                username: "lgreig204",
                 password: "P4sSw0Rd!",
                 score: 0
             }
@@ -109,9 +91,27 @@ describe('Register', () => {
                         res.body.should.be.a('object');
                         res.body.should.have.property('success').eql(false);
                         res.body.should.have.property('msg').eql('User already exists');
+                        done();
                     });
-                done();
             });
+        });
+    });
+    describe('/POST register', () => {
+        it('Exceptional 3 test Password complexity', (done) => {
+            let user = {
+                username: "lgreig203",
+                password: "Password1",
+                score: 0
+            }
+          chai.request(server)
+              .post('/user/register')
+              .send(user)
+              .end((err, res) => {
+                    res.body.should.be.a('object');
+                    res.body.should.have.property('success').eql(false);
+                    res.body.should.have.property('msg').eql('Password entered is considered to be weak. Password must contain At least 1 lowercase alphabetical character. 1 upper case alphabetical character. Numceric character. Special character and must be longer than 8 characters');
+                    done();
+              });
         });
     });
 });

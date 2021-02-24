@@ -4,7 +4,7 @@ var Schema = mongoose.Schema;
 
 var CommentSchema = new Schema({
     comment: String,
-    username: String,
+    user_id: String,
     timestamp: { type: Date, default: Date.now }
 })
 
@@ -20,4 +20,3 @@ var CodeSchema = new Schema({
 });
 
 module.exports = mongoose.model('code', CodeSchema);
-module.exports = mongoose.model('comments', CommentSchema);

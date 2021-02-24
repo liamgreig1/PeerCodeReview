@@ -17,44 +17,45 @@ router.post(
   passport.authenticate("jwt", { session: false }),
   (req, res, next) => {
 
-    var addComment = false;
+    var addComment = true;
     var comment = req.body.comment;
-    var username = req.body.username;
-    var code = req.body.code_id;
-
-    if (comment.length > 120) {
-      addComment = false;
-      res.status(413).json({ success: false, msg: "Comment greater than 120 characters"});
-    }
+    var username = req.body.userid;
+    var code = req.body.codeid;
 
     Code.findOne({ _id: code}).then((code) => {
       if (!code) {
         addComment = false;
         res.status(403).json({ success:false, msg:"Code does not exist"});
       }
-    });
 
-    User.findOne({username: username}).then((user) => {
-      if (!user) {
+      if(code.reviewer != username){
         addComment = false;
-        res.status(403).json({ success:false, msg:"User commenting does not exist"});
+        res.status(403).json({ success:false, msg:"You have not been assigned to review this code"});
       }
-    })
 
-    try {
-      var newComment = {
-        comment: comment,
-        username: username
+      if (comment.length > 120) {
+        addComment = false;
+        res.status(413).json({ success: false, msg: "Comment greater than 120 characters"});
       }
-      Code.updateOne(
-        {_id: code},
-        {$push: {comments: newComment}
-      }).then((comment) => {
-        res.status(200).json({ success: true, comment: comment});
-        });
-    } catch (err) {
-      res.status(400).json({ success: false, msg: err });
-    }
+
+      if (addComment == true) {
+        var newComment = {
+          comment: comment,
+          user_id: username
+        }
+        try { 
+          Code.updateOne(
+            {_id: code},
+            {$push: {comments: newComment}
+          }).then((comment) => {
+            res.status(200).json({ success: true, comment: comment});
+            });
+        } catch (err) {
+          res.status(400).json({ success: false, msg: err });
+        }
+      }
+      
+    });
   }
 );
 

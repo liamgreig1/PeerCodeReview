@@ -34,47 +34,43 @@ router.post(
         upload = false;
         res.status(403).json({ success: false, msg: "Author does not exist" });
       } else {
-        author = user.username;
+        // authorUname = user.username;
         if (author == reviewer) {
           upload = false;
-          res
-            .status(401)
-            .json({
-              success: false,
-              msg: "User can't assign themself as reviewer.",
-            });
+          res.status(401).json({success: false, msg: "User can't assign themself as reviewer." });
         }
+
+        if (upload == true) {
+          const newCode = new Code({
+            filename: filename,
+            filesize: fileSize,
+            content: content,
+            author: author,
+            reviewer: reviewer,
+            status: status,
+          });
+    
+          try {
+            newCode.save().then((code) => {
+              res.status(200).json({ success: true, code: code });
+            });
+          } catch (err) {
+            res.status(400).json({ success: false, msg: err });
+          }
+        }
+        
       }
     });
 
-    User.findOne({ username: reviewer }).then((user) => {
-      if (!user) {
-        upload = false;
-        res
-          .status(400)
-          .json({ success: false, msg: "Reviewer does not exist" });
-      }
-    });
-
-    if (upload == true) {
-      const newCode = new Code({
-        filename: filename,
-        filesize: fileSize,
-        content: content,
-        author: author,
-        reviewer: reviewer,
-        status: status,
-      });
-
-      try {
-        newCode.save().then((code) => {
-          res.status(200).json({ success: true, code: code });
-        });
-      } catch (err) {
-        res.status(400).json({ success: false, msg: err });
-      }
+    // User.findOne({ username: reviewer }).then((user) => {
+    //   if (!user) {
+    //     upload = false;
+    //     res
+    //       .status(400)
+    //       .json({ success: false, msg: "Reviewer does not exist" });
+    //   }
+    // });
     }
-  }
 );
 
 module.exports = router;
