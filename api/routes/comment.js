@@ -48,7 +48,7 @@ router.post(
             {_id: code},
             {$push: {comments: newComment}
           }).then((comment) => {
-            res.status(200).json({ success: true, comment: comment});
+            res.status(201).json({ success: true, comment: comment});
             });
         } catch (err) {
           res.status(400).json({ success: false, msg: err });
