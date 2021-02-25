@@ -25,7 +25,8 @@
   },
   "homepage": "https://github.com/liamgreig1/PeerCodeReview#readme",
   "devDependencies": {
-    "nodemon": "^2.0.7"
+    "nodemon": "^2.0.7",
+    "typescript": "^4.1.5"
   },
   "dependencies": {
     "chai": "^4.3.0",
@@ -37,6 +38,7 @@
     "jsonwebtoken": "^8.5.1",
     "jwt-decode": "^3.1.2",
     "mocha": "^8.3.0",
+    "mongo-sanitize": "^1.1.0",
     "mongoose": "^5.11.15",
     "passport": "^0.4.1",
     "passport-jwt": "^4.0.0",

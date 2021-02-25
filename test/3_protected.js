@@ -14,7 +14,7 @@ let should = chai.should();
 chai.use(chaiHttp);
 
 describe('Protected', () => {
-    beforeEach((done) => { //Before each test we empty the database
+    afterEach((done) => { //after each test we empty the database
         User.deleteMany({}, (err) => {
            done();
         });
@@ -22,7 +22,7 @@ describe('Protected', () => {
     describe('/GET protected', () => {
         it('Normal test to see if user is logedin', (done) => {
             let user = {
-                username: "lgreig200",
+                username: "lgreig212",
                 password: "P4sSw0Rd!",
                 score: 0
             }
@@ -56,7 +56,7 @@ describe('Protected', () => {
     describe('/GET protected', () => {
         it('Exceptional test make sure only user with token can access this route', (done) => {
             let user = {
-                username: "lgreig200",
+                username: "lgreig213",
                 password: "P4sSw0Rd!",
                 score: 0
             }
