@@ -18,6 +18,7 @@ router.post(
   passport.authenticate("jwt", { session: false }),
   (req, res, next) => {
     var addComment = true;
+    
     var comment = sanitize(req.body.comment);
     var username = sanitize(req.body.userid);
     var code = sanitize(req.body.codeid);
