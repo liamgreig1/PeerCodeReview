@@ -10,7 +10,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 export class RegisterComponent implements OnInit {
 
   @ViewChild('registerform', { static: false }) registerForm: NgForm;
-  constructor(private http: HttpClient) { }
+  constructor( private http: HttpClient) { }
 
   onRegisterSubmit() {
     const username = this.registerForm.value.username;
@@ -20,10 +20,11 @@ export class RegisterComponent implements OnInit {
 
     const reqObject = {
       username: username,
-      password: password
+      password: password,
+      score:0
     };
 
-    this.http.post('http://localhost:3000/register', reqObject, { headers: headers }).subscribe(
+    this.http.post('http://localhost:3000/user/register', reqObject, { headers: headers }).subscribe(
       
       // The response data
       (response) => {
@@ -43,7 +44,7 @@ export class RegisterComponent implements OnInit {
     );
   }
 
-  ngOnInit(): void {
+  ngOnInit() {
   }
 
 }

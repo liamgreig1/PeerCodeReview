@@ -49,7 +49,7 @@ describe("Comment", () => {
             .end((err, res) => {
               res.body.should.be.a("object");
               res.body.should.have.property("success").eql(true);
-              var reviewerid = res.body.msg._id;
+              var reviewerid = res.body.userId;
               let code = {
                 filename: "HelloWorld.java",
                 filesize: 117,
@@ -125,7 +125,7 @@ describe("Comment", () => {
             .end((err, res) => {
               res.body.should.be.a("object");
               res.body.should.have.property("success").eql(true);
-              var reviewerid = res.body.msg._id;
+              var reviewerid = res.body.userId;
               let code = {
                 filename: "HelloWorld.java",
                 filesize: 117,
@@ -202,7 +202,7 @@ describe("Comment", () => {
             .end((err, res) => {
               res.body.should.be.a("object");
               res.body.should.have.property("success").eql(true);
-              var reviewerid = res.body.msg._id;
+              var reviewerid = res.body.userId;
               let code = {
                 filename: "HelloWorld.java",
                 filesize: 117,
@@ -283,7 +283,7 @@ describe("Comment", () => {
             .end((err, res) => {
               res.body.should.be.a("object");
               res.body.should.have.property("success").eql(true);
-              var reviewerid = res.body.msg._id;
+              var reviewerid = res.body.userId;
               let code = {
                 filename: "HelloWorld.java",
                 filesize: 117,

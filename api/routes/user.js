@@ -95,7 +95,7 @@ router.post("/register", function (req, res, next) {
         });
         try {
           newUser.save().then((user) => {
-            res.status(201).json({ success: true, user: user });
+            res.status(201).json({ success: true, msg: "Successful Registration" });
           });
         } catch (err) {
           res.status(400).json({ success: false, msg: err });
@@ -112,7 +112,7 @@ router.post(
     var pUser = sanitize(req.body.username);
     User.findOne({ username: pUser }, { username: 1 }).then((user) => {
       if (user) {
-        res.status(200).json({ success: true, msg: user });
+        res.status(200).json({ success: true, userId: user._id, username: user.username });
       } else {
         res.status(400).json({ success: false, msg: "User does not exist" });
       }
@@ -128,7 +128,7 @@ router.post(
     var pUserId = sanitize(req.body._id);
     User.findOne({ _id: pUserId }, { username: 1 }).then((user) => {
       if (user) {
-        res.status(200).json({ success: true, msg: user });
+        res.status(200).json({ success: true, userId: user._id, username: user.username });
       } else {
         res.status(400).json({ success: false, msg: "User does not exist" });
       }

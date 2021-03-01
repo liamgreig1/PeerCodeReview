@@ -65,7 +65,7 @@ describe("Upload", () => {
                     .end((err, res) => {
                       res.body.should.be.a("object");
                       res.body.should.have.property("success").eql(true);
-                      var reviewerid = res.body.msg._id;
+                      var reviewerid = res.body.userId;
                       let code = {
                         filename: "HelloWorld.java",
                         filesize: 117,
@@ -118,7 +118,7 @@ describe("Upload", () => {
             .end((err, res) => {
               res.body.should.be.a("object");
               res.body.should.have.property("success").eql(true);
-              var reviewerid = res.body.msg._id;
+              var reviewerid = res.body.userId;
               let code = {
                 filename: "HelloWorld1.java",
                 filesize: 20480,
@@ -168,7 +168,7 @@ describe("Upload", () => {
             .end((err, res) => {
               res.body.should.be.a("object");
               res.body.should.have.property("success").eql(true);
-              var reviewerid = res.body.msg._id;
+              var reviewerid = res.body.userId;
               let code = {
                 filename: "HelloWorld2.java",
                 filesize: 30720,
@@ -244,7 +244,7 @@ describe("Upload", () => {
             .end((err, res) => {
               res.body.should.be.a("object");
               res.body.should.have.property("success").eql(true);
-              var reviewerid = res.body.msg._id;
+              var reviewerid = res.body.userId;
               let code = {
                 filename: "HelloWorld4.java",
                 filesize: 117,
