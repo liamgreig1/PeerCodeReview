@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'app-protected-component',
@@ -7,9 +8,28 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProtectedComponentComponent implements OnInit {
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
+
+  message: String
 
   ngOnInit(): void {
+    this.http.get('http://localhost:3000/user/protected').subscribe(
+      (response) => {
+        if (response) {
+          this.message = 'You are authenticated!';
+        }
+      },
+
+      (error) => {
+        if (error.status === 401) {
+          this.message = 'You are not authorized to visit this route.  No data is displayed.';
+        }
+      }, 
+
+      () => {
+        console.log('HTTP request done');
+      }
+    );
   }
 
 }
