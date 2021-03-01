@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -10,7 +11,9 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 export class RegisterComponent implements OnInit {
 
   @ViewChild('registerform', { static: false }) registerForm: NgForm;
-  constructor( private http: HttpClient) { }
+  constructor( private http: HttpClient, private router: Router) { }
+
+  message: String;
 
   onRegisterSubmit() {
     const username = this.registerForm.value.username;
@@ -28,11 +31,13 @@ export class RegisterComponent implements OnInit {
       
       // The response data
       (response) => {
-        console.log(response);
+        this.router.navigate(['/login']);
+        console.log(response['msg']);
       },
 
       // If there is an error
       (error) => {
+        this.message = error.error.msg;
         console.log(error);
       },
       

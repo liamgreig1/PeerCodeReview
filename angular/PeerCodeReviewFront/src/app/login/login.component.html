@@ -1,4 +1,4 @@
-<h2>Login</h2>
+<!-- <h2>Login</h2>
 
 <form (ngSubmit)="onLoginSubmit()" #loginform="ngForm">
   <div>
@@ -8,4 +8,27 @@
     <input type="password" name="password" ngModel>
   </div>
   <button style="margin-top: 20px;" type="submit">Register</button>
+</form> -->
+
+
+<!-- Default form login -->
+<form (ngSubmit)="onLoginSubmit()" #loginform="ngForm" class="text-center border border-light p-5">
+
+  <p class="h4 mb-4">Sign in</p>
+
+  <!-- Email -->
+  <input type="text" name="username" class="form-control mb-4" placeholder="Username" ngModel>
+
+  <!-- Password -->
+  <input type="password" name="password" class="form-control mb-4" placeholder="Password" ngModel>
+
+  <!-- Sign in button -->
+  <button mdbBtn color="info" block="true" class="my-4" type="submit">Sign in</button>
+
+  <!-- Register -->
+  <p>Not a member?
+    <a routerLink="/register">Register</a>
+  </p>
+
 </form>
+<!-- Default form login -->

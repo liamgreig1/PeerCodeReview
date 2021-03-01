@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AuthService } from '../services/auth.service';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -11,7 +12,7 @@ import { AuthService } from '../services/auth.service';
 export class LoginComponent implements OnInit {
 
   @ViewChild('loginform', { static: false }) loginForm: NgForm;
-  constructor(private http: HttpClient, private authService: AuthService) { }
+  constructor(private http: HttpClient, private authService: AuthService, private router: Router) { }
 
   onLoginSubmit() {
     const username = this.loginForm.value.username;
@@ -30,7 +31,8 @@ export class LoginComponent implements OnInit {
       (response) => {
         // If the user authenticates successfully, we need to store the JWT returned in localStorage
         this.authService.setLocalStorage(response);
-        console.log(response);
+        this.router.navigate(['/protected']);
+        // console.log(response);
       },
 
       // If there is an error
