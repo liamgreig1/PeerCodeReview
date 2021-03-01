@@ -3,6 +3,7 @@ const router = require("express").Router();
 const Code = mongoose.model("code");
 const User = mongoose.model("user");
 const passport = require("passport");
+const sanitize = require("mongo-sanitize");
 
 /**
  * receive code from user and save to database
@@ -17,12 +18,12 @@ router.post(
   passport.authenticate("jwt", { session: false }),
   (req, res, next) => {
     var upload = true;
-    var filename = req.body.filename;
-    var fileSize = req.body.filesize;
-    var content = req.body.content;
-    var author = req.body.author;
-    var reviewer = req.body.reviewer;
-    var status = req.body.status;
+    var filename = sanitize(req.body.filename);
+    var fileSize = sanitize(req.body.filesize);
+    var content = sanitize(req.body.content);
+    var author = sanitize(req.body.author);
+    var reviewer = sanitize(req.body.reviewer);
+    var status = sanitize(req.body.status);
 
     if (fileSize > 20480) {
       upload = false;
@@ -34,10 +35,12 @@ router.post(
         upload = false;
         res.status(403).json({ success: false, msg: "Author does not exist" });
       } else {
-        // authorUname = user.username;
         if (author == reviewer) {
           upload = false;
-          res.status(401).json({success: false, msg: "User can't assign themself as reviewer." });
+          res.status(401).json({
+            success: false,
+            msg: "User can't assign themself as reviewer.",
+          });
         }
 
         if (upload == true) {
@@ -49,7 +52,7 @@ router.post(
             reviewer: reviewer,
             status: status,
           });
-    
+
           try {
             newCode.save().then((code) => {
               res.status(200).json({ success: true, code: code });
@@ -58,19 +61,9 @@ router.post(
             res.status(400).json({ success: false, msg: err });
           }
         }
-        
       }
     });
-
-    // User.findOne({ username: reviewer }).then((user) => {
-    //   if (!user) {
-    //     upload = false;
-    //     res
-    //       .status(400)
-    //       .json({ success: false, msg: "Reviewer does not exist" });
-    //   }
-    // });
-    }
+  }
 );
 
 module.exports = router;
