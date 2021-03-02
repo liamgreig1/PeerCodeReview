@@ -1,2 +1,6 @@
 <!-- This will print the value of the `message` variable in protected-component.component.ts -->
 <p>Message: {{ message }}</p>
+
+<form (ngSubmit)="onLogoutSubmit()" #registerform="ngForm">
+    <button style="margin-top: 20px;" type="submit">Logout</button>
+  </form>

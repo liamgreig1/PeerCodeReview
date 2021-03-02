@@ -19,18 +19,19 @@ import { AuthService } from './services/auth.service';
 import { AuthInterceptor } from './interceptors/auth-interceptor';
 
 const appRoutes: Routes = [
-  { path: 'login', component: LoginComponent },
+  { path: '', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-  { path: 'protected', component: ProtectedComponentComponent }
+  { path: 'protected', component: ProtectedComponentComponent },
+  { path: '**', redirectTo: '' }
 ];
 
 @NgModule({
-  declarations: [
+  declarations: [	
     AppComponent,
     RegisterComponent,
     LoginComponent,
     ProtectedComponentComponent
-  ],
+   ],
   imports: [
     BrowserModule,
     FormsModule,

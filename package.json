@@ -29,6 +29,8 @@
     "typescript": "^4.1.5"
   },
   "dependencies": {
+    "@angular/cdk": "^11.2.2",
+    "@angular/flex-layout": "^11.0.0-beta.33",
     "chai": "^4.3.0",
     "chai-http": "^4.3.0",
     "check-password-strength": "^1.0.15",

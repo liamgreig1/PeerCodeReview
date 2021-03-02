@@ -17,32 +17,52 @@ const sanitize = require("mongo-sanitize");
 router.post("/login", function (req, res, next) {
   var pUser = sanitize(req.body.username);
   var pPassword = sanitize(req.body.password);
+  var loguserIn = true;
+  var errors = new Array();
 
   User.findOne({ username: pUser })
     .then((user) => {
-      if (!user) {
-        res
-          .status(400)
-          .json({ success: false, msg: "username or password is wrong" });
+      if (pUser) {
+        if (!user) {
+          loguserIn = false;
+          errors.push("Username or password is wrong ");
+        }
+      } else {
+        loguserIn = false;
+        errors.push("Must enter a username ");
+        // res.status(400).json({ success: false, msg: "Must enter a username" });
       }
 
-      // Function defined at bottom of app.js
-      const isValid = utils.validPassword(pPassword, user.hash, user.salt);
+      if (!pPassword) {
+        loguserIn = false;
+        errors.push("Must enter a password ");
+        // res.status(400).json({ success: false, msg: "Must enter a password" });
+      }
 
-      if (isValid) {
-        const tokenObject = utils.issueJWT(user);
 
-        res
-          .status(202)
-          .json({
-            success: true,
-            token: tokenObject.token,
-            expiresIn: tokenObject.expires,
-          });
+      if (loguserIn == true) {
+        // Function defined at bottom of app.js
+        const isValid = utils.validPassword(pPassword, user.hash, user.salt);
+
+        if (isValid) {
+          const tokenObject = utils.issueJWT(user);
+
+          res
+            .status(202)
+            .json({
+              success: true,
+              token: tokenObject.token,
+              expiresIn: tokenObject.expires,
+            });
+        } else {
+          res
+            .status(400)
+            .json({ success: false, msg: "username or password is wrong" });
+        }
       } else {
         res
           .status(400)
-          .json({ success: false, msg: "username or password is wrong" });
+          .json({ success: false, msg: errors });
       }
     })
     .catch((err) => {
@@ -62,47 +82,58 @@ router.post("/register", function (req, res, next) {
   var pUser = sanitize(req.body.username);
   var pPassword = sanitize(req.body.password);
   var pScore = sanitize(req.body.score);
+  var errors = new Array();
 
   User.findOne({ username: pUser }).then((user) => {
-    if (user) {
-      addUser = false;
-      res.status(403).json({ success: false, msg: "User already exists" });
+    if (pUser) {
+      if (user) {
+        addUser = false;
+        errors.push("User already exists ")
+      }
     } else {
+      addUser = false;
+      errors.push("A username must be entered ")
+    }
+
+    if (pPassword) {
       if (passwordStrength(pPassword).id <= 1) {
         addUser = false;
-        res
-          .status(400)
-          .json({
-            success: false,
-            msg:
-              "Password entered is considered to be weak. " +
-              "Password must contain At least 1 lowercase alphabetical character. 1 upper case alphabetical character. " +
-              "Numceric character. Special character and must be longer than 8 characters",
-          });
+        errors.push("Password entered is considered to be weak. " +
+          "Password must contain At least 1 lowercase alphabetical character. 1 upper case alphabetical character. " +
+          "Numceric character. Special character and must be longer than 8 characters ")
       }
-
-      if (addUser == true) {
-        const saltHash = utils.genPassword(pPassword);
-
-        const salt = saltHash.salt;
-        const hash = saltHash.hash;
-
-        const newUser = new User({
-          username: pUser,
-          hash: hash,
-          salt: salt,
-          reputationscore: pScore,
-        });
-        try {
-          newUser.save().then((user) => {
-            res.status(201).json({ success: true, msg: "Successful Registration" });
-          });
-        } catch (err) {
-          res.status(400).json({ success: false, msg: err });
-        }
-      }
+    } else {
+      addUser = false;
+      errors.push("A password must be entered ")
     }
-  });
+
+
+    if (addUser == true) {
+      const saltHash = utils.genPassword(pPassword);
+
+      const salt = saltHash.salt;
+      const hash = saltHash.hash;
+
+      const newUser = new User({
+        username: pUser,
+        hash: hash,
+        salt: salt,
+        reputationscore: pScore,
+      });
+      try {
+        newUser.save().then((user) => {
+          res.status(201).json({ success: true, msg: "Successful Registration" });
+        });
+      } catch (err) {
+        res.status(400).json({ success: false, msg: err });
+      }
+    } else {
+      res
+        .status(400)
+        .json({ success: false, msg: errors });
+    }
+  }
+  );
 });
 // http://localhost:3000/user/userexists
 router.post(

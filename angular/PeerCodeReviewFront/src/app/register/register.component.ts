@@ -11,42 +11,47 @@ import { Router, ActivatedRoute } from '@angular/router';
 export class RegisterComponent implements OnInit {
 
   @ViewChild('registerform', { static: false }) registerForm: NgForm;
-  constructor( private http: HttpClient, private router: Router) { }
+  constructor(private http: HttpClient, private router: Router) { }
 
   message: String;
 
   onRegisterSubmit() {
     const username = this.registerForm.value.username;
     const password = this.registerForm.value.password;
+    const confirmPassword = this.registerForm.value.confirmPassword;
 
-    const headers = new HttpHeaders({'Content-type': 'application/json'});
+    const headers = new HttpHeaders({ 'Content-type': 'application/json' });
 
     const reqObject = {
       username: username,
       password: password,
-      score:0
+      score: 0
     };
 
-    this.http.post('http://localhost:3000/user/register', reqObject, { headers: headers }).subscribe(
-      
-      // The response data
-      (response) => {
-        this.router.navigate(['/login']);
-        console.log(response['msg']);
-      },
+    if (password != confirmPassword) {
+      this.message = "Passwords do not match";
+    } else {
+      this.http.post('http://localhost:3000/user/register', reqObject, { headers: headers }).subscribe(
 
-      // If there is an error
-      (error) => {
-        this.message = error.error.msg;
-        console.log(error);
-      },
-      
-      // When observable completes
-      () => {
-        console.log('done!');
-      }
+        // The response data
+        (response) => {
+          this.router.navigate(['/login']);
+          console.log(response['msg']);
+        },
 
-    );
+        // If there is an error
+        (error) => {
+          this.message = error.error.msg;
+          console.log(error);
+        },
+
+        // When observable completes
+        () => {
+          console.log('done!');
+        }
+
+      );
+    }
   }
 
   ngOnInit() {

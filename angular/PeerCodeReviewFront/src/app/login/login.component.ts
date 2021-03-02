@@ -14,6 +14,8 @@ export class LoginComponent implements OnInit {
   @ViewChild('loginform', { static: false }) loginForm: NgForm;
   constructor(private http: HttpClient, private authService: AuthService, private router: Router) { }
 
+  message: String;
+
   onLoginSubmit() {
     const username = this.loginForm.value.username;
     const password = this.loginForm.value.password;
@@ -37,6 +39,7 @@ export class LoginComponent implements OnInit {
 
       // If there is an error
       (error) => {
+        this.message = error.error.msg;
         console.log(error);
       },
 

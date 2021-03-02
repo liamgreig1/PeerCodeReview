@@ -1,4 +1,4 @@
-<h2>Register</h2>
+<!-- <h2>Register</h2>
 
 <form (ngSubmit)="onRegisterSubmit()" #registerform="ngForm">
   <div>
@@ -11,3 +11,41 @@
 </form>
 
 <p>{{ message }}</p>
+
+<p><a routerLink="/">Login</a></p> -->
+
+
+<!-- Default form login -->
+
+<div class="container card-top">
+  <h1>GCU Peer Code Review</h1>
+  <div class="row">
+    <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+      <div class="card card-signin my-5">
+        <div class="card-body">
+          <h5 class="card-title text-center">Register</h5>
+          <p style="text-align: center;">
+            <span style="text-align: center; display: inline-block;" class="material-icons icon" aria-hidden="true">person_add</span>
+          </p>
+          <form (ngSubmit)="onRegisterSubmit()" #registerform="ngForm" class="form-signin">
+            <div class="form-label-group">
+              <input type="text" id="inputUsername" name="username" class="form-control mb-4" placeholder="Username" ngModel required autofocus>
+              <label for="inputUsername">Username</label>
+            </div>
+            <div class="form-label-group">
+              <input type="password" id="inputPassword" name="password" class="form-control mb-4" placeholder="Password" ngModel required>
+              <label for="inputPassword">Password</label>
+            </div>
+            <div class="form-label-group">
+              <input type="password" id="inputConfirmPassword" name="confirmPassword" class="form-control mb-4" placeholder="Confirm Password" ngModel required>
+              <label for="inputConfirmPassword">Confirm Password</label>
+            </div>
+            <p class="text-danger">{{ message }}</p>
+            <button mdbBtn color="info" block="true" class="btn btn-lg btn-submit btn-block" type="submit">Register</button>
+          </form>
+        </div>
+      </div>
+      <button mdbBtn color="info" block="true" class="btn btn-lg btn-reg btn-block" routerLink="/">Sign in</button>
+    </div>
+  </div>
+</div>
