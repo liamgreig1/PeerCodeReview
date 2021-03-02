@@ -93,9 +93,7 @@ describe("Login", () => {
             .end((err, res) => {
               res.body.should.be.a("object");
               res.body.should.have.property("success").eql(false);
-              res.body.should.have
-                .property("msg")
-                .eql("username or password is wrong");
+              res.body.should.have.property("msg").eql("username or password is wrong");
                 done();
             });
         });
@@ -126,9 +124,7 @@ describe("Login", () => {
             .end((err, res) => {
               res.body.should.be.a("object");
               res.body.should.have.property("success").eql(false);
-              res.body.should.have
-                .property("msg")
-                .eql("username or password is wrong");
+              res.body.should.have.property("msg").eql(['Username or password is wrong ']);
                 done();
             });
         });
@@ -162,7 +158,7 @@ describe("Login", () => {
               res.body.should.have.property("success").eql(false);
               res.body.should.have
                 .property("msg")
-                .eql("username or password is wrong");
+                .eql(['Username or password is wrong ']);
                 done();
             });
         });
