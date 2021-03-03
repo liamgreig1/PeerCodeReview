@@ -13,9 +13,25 @@ export class ProtectedComponentComponent implements OnInit {
   constructor(private http: HttpClient, private authService: AuthService, private router: Router) { }
 
   message: String
+  onGetUsers(){
+    this.http.get('http://localhost:3000/user/listofusers').subscribe(
+      (response) => {
+        if (response) {
+          this.message = response['msg'][3]['username'];
+          console.log(response['msg']);
+        }
+      },
 
-  onGetUser(){
-    
+      (error) => {
+        if (error.status === 401) {
+          this.message = 'You are not authorized to visit this route.  No data is displayed.';
+        }
+      }, 
+
+      () => {
+        console.log('HTTP request done');
+      }
+    );
   }
 
   onLogoutSubmit(){

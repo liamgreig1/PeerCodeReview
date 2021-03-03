@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import * as moment from "moment";
+import * as jwt_decode from 'jwt-decode';
 
 @Injectable()
 export class AuthService {
@@ -30,5 +31,16 @@ export class AuthService {
         const expiration = localStorage.getItem("expires_at");
         const expiresAt = JSON.parse(expiration);
         return moment(expiresAt);
+    }
+
+    doesTokenExist() {
+        if(localStorage.length == 0){
+            return false;
+        }
+    }
+
+    isTokenExpired(){
+        const expiry = this.getExpiration();
+        return (Math.floor((new Date).getTime() / 1000)) > expiry.unix();
     }
 }
