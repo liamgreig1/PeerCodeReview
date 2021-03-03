@@ -17,16 +17,17 @@ import { ProtectedComponentComponent } from './protected-component/protected-com
 
 import { AuthService } from './services/auth.service';
 import { AuthInterceptor } from './interceptors/auth-interceptor';
+import { AuthGuard } from './auth.guard';
 
 const appRoutes: Routes = [
   { path: '', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-  { path: 'protected', component: ProtectedComponentComponent },
+  { path: 'protected', component: ProtectedComponentComponent, canActivate: [AuthGuard] },
   { path: '**', redirectTo: '' }
 ];
 
 @NgModule({
-  declarations: [	
+  declarations: [		
     AppComponent,
     RegisterComponent,
     LoginComponent,
