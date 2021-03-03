@@ -1,9 +1,10 @@
+<app-navbar></app-navbar>
 <!-- This will print the value of the `message` variable in protected-component.component.ts -->
 <p>Message: {{ message }}</p>
 
-<form (ngSubmit)="onLogoutSubmit()" #registerform="ngForm">
+<!-- <form (ngSubmit)="onLogoutSubmit()" #protectedform="ngForm">
     <button style="margin-top: 20px;" type="submit">Logout</button>
-</form>
-<form (ngSubmit)="onGetUsers()" #registerform="ngForm">
+</form> -->
+<form (ngSubmit)="onGetUsers()" #protectedform="ngForm">
   <button style="margin-top: 20px;" type="submit">Get Users</button>
 </form>

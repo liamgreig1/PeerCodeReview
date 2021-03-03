@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import * as moment from "moment";
-import * as jwt_decode from 'jwt-decode';
+import jwt_decode from 'jwt-decode';
 
 @Injectable()
 export class AuthService {
@@ -12,7 +12,13 @@ export class AuthService {
 
         localStorage.setItem('id_token', responseObj.token);
         localStorage.setItem("expires_at", JSON.stringify(expiresAt.valueOf()) );
-    }          
+    }   
+    
+    getUserId(){
+        var token = localStorage.getItem('id_token');
+        var decoded = jwt_decode(token); 
+        return decoded['sub'];
+    }
 
     logout() {
         localStorage.removeItem("id_token");
@@ -37,10 +43,22 @@ export class AuthService {
         if(localStorage.length == 0){
             return false;
         }
+        else{
+            return true;
+        }
     }
 
-    isTokenExpired(){
-        const expiry = this.getExpiration();
-        return (Math.floor((new Date).getTime() / 1000)) > expiry.unix();
+    isTokenActive(){
+        // const exp = JSON.parse(localStorage.getItem("expires_at"));
+
+        // console.log("E",exp);
+        // console.log("N",Date.now());
+        // console.log(Date.now() >= exp * 1000);
+        // if (Date.now() >= exp * 1000) {
+        //     return true;
+        // }else{
+        //     return false;
+        // }
+        return true;
     }
 }
