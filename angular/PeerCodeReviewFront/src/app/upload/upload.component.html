@@ -1,0 +1,12 @@
+<app-navbar></app-navbar>
+
+<div class="form-group">
+  <label for="file">Choose File</label>
+  <input type="file"
+         id="file"
+         (change)="handleFileInput($event.target.files)">
+</div>
+
+<form (ngSubmit)="uploadDocument()" #uploadform="ngForm">
+  <button style="margin-top: 20px;" type="submit">Upload</button>
+</form>
