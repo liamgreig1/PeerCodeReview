@@ -1,0 +1,16 @@
+.welcomerow{
+    padding-top:5em;
+}
+
+.middlerow{
+    padding-top:5em;
+    text-align: center;
+}
+.bottomrow{
+    padding-top:5em;
+    text-align: center;
+}
+a{
+    background-color: #ABC3C9;
+    font-size: 25px;
+}

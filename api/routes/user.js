@@ -46,7 +46,6 @@ router.post("/login", function (req, res, next) {
 
         if (isValid) {
           const tokenObject = utils.issueJWT(user);
-
           res
             .status(202)
             .json({

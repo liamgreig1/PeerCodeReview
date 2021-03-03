@@ -33,7 +33,7 @@ export class LoginComponent implements OnInit {
       (response) => {
         // If the user authenticates successfully, we need to store the JWT returned in localStorage
         this.authService.setLocalStorage(response);
-        this.router.navigate(['/protected']);
+        this.router.navigate(['/home']);
         // console.log(response);
       },
 

@@ -14,6 +14,8 @@ import { AppComponent } from './app.component';
 import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
 import { ProtectedComponentComponent } from './protected-component/protected-component.component';
+import { NavbarComponent } from './navbar/navbar.component';
+import { HomeMenuComponent } from './home-menu/home-menu.component';
 
 import { AuthService } from './services/auth.service';
 import { AuthInterceptor } from './interceptors/auth-interceptor';
@@ -23,16 +25,19 @@ const appRoutes: Routes = [
   { path: '', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'protected', component: ProtectedComponentComponent, canActivate: [AuthGuard] },
+  { path: 'home', component: HomeMenuComponent, canActivate: [AuthGuard]},
   { path: '**', redirectTo: '' }
 ];
 
 @NgModule({
-  declarations: [		
+  declarations: [
     AppComponent,
     RegisterComponent,
     LoginComponent,
-    ProtectedComponentComponent
-   ],
+    ProtectedComponentComponent,
+    NavbarComponent,
+    HomeMenuComponent
+  ],
   imports: [
     BrowserModule,
     FormsModule,
