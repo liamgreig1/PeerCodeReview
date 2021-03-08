@@ -34,6 +34,8 @@ export class HomeMenuComponent implements OnInit {
       // If there is an error
       (error) => {
         console.log(error);
+        this.authService.logout();
+        this.router.navigate(['/']);
       },
 
       // When observable completes

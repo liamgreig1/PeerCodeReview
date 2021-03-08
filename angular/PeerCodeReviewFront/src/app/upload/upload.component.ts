@@ -1,5 +1,8 @@
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { FormBuilder, NgForm, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-upload',
@@ -9,25 +12,99 @@ import { NgForm } from '@angular/forms';
 export class UploadComponent implements OnInit {
 
   @ViewChild('uploadform', { static: false }) uploadForm: NgForm;
-  constructor() { }
+  constructor(private http: HttpClient, private authService: AuthService, private router: Router, private fb: FormBuilder) { }
 
   fileToUpload: File = null;
+
+
+  users: any;
+  userArray: any
+  userSelect: any;
+  fileContent: any = "";
+  message: String;
+  language: String = "";
+
+  editorOptions = { theme: 'vs-dark', language: this.language };
+  code: any;
+  originalCode: string = 'function x() { // TODO }';
+
   ngOnInit() {
+
+    const headers = new HttpHeaders({ 'Content-type': 'application/json' });
+    this.http.get('http://localhost:3000/user/listofusers', { headers: headers }).subscribe(
+      // The response data
+      (response) => {
+        // If the user authenticates successfully, we need to store the JWT returned in localStorage
+        this.users = response;
+        this.userArray = this.users.msg
+        // console.log(response);
+      },
+
+      // If there is an error
+      (error) => {
+        console.log(error);
+      },
+      // When observable completes
+      () => {
+        console.log('done!');
+      }
+    )
   }
 
   handleFileInput(files: FileList) {
     this.fileToUpload = files.item(0);
   }
 
-  uploadDocument() { 
+  uploadDocument() {
     let fileReader = new FileReader();
+
     fileReader.onload = (e) => {
+      this.fileContent = fileReader.result;
+      this.code = fileReader.result;
+      var filetype = this.fileToUpload.name.split(".");
+      this.language = filetype[1];
+      console.log(this.language);
       console.log(fileReader.result);
     }
     fileReader.readAsText(this.fileToUpload);
-    console.log(fileReader)
-    console.log(this.fileToUpload.size)
-    console.log(this.fileToUpload.name)
+  }
+
+  submitForReview() {
+    const filename = this.fileToUpload.name;
+    const filesize = this.fileToUpload.size;
+    const authorId = this.authService.getUserId();
+    const reviewer = this.userSelect;
+    console.log(this.fileContent)
+
+    const headers = new HttpHeaders({ 'Content-type': 'application/json' });
+
+    const reqObject = {
+      filename: filename,
+      filesize: filesize,
+      content: this.fileContent,
+      author: authorId,
+      reviewer: reviewer,
+      status: false
+    };
+
+    this.http.post('http://localhost:3000/code/upload', reqObject, { headers: headers }).subscribe(
+      // The response data
+      (response) => {
+        // If the user authenticates successfully, we need to store the JWT returned in localStorage
+        console.log(response);
+        this.message = "File uploaded successfully.";
+      },
+
+      // If there is an error
+      (error) => {
+        console.log(error);
+        this.message = error.message;
+      },
+      // When observable completes
+      () => {
+        console.log('done!');
+      }
+    )
   }
 
 }

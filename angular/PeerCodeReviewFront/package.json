@@ -21,8 +21,13 @@
     "@angular/platform-browser": "~10.2.0",
     "@angular/platform-browser-dynamic": "~10.2.0",
     "@angular/router": "~10.2.0",
+    "@materia-ui/ngx-monaco-editor": "^5.0.0",
+    "@syncfusion/ej2-angular-buttons": "^18.4.46",
+    "@syncfusion/ej2-angular-dropdowns": "^18.4.46",
+    "codeflask": "^1.4.1",
     "jwt-decode": "^3.1.2",
     "monaco-editor": "^0.22.3",
+    "ngx-monaco-editor": "^10.0.0-beta.1",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.2"

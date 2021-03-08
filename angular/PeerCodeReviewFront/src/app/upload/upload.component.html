@@ -1,12 +1,42 @@
 <app-navbar></app-navbar>
 
-<div class="form-group">
-  <label for="file">Choose File</label>
-  <input type="file"
-         id="file"
-         (change)="handleFileInput($event.target.files)">
-</div>
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12 toprow">
+      <h1>Upload Code</h1>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="form-group">
+        <input type="file" id="file" (change)="handleFileInput($event.target.files)">
+      </div>
+      <div style="height: 500px">
+        <ngx-monaco-editor [options]="editorOptions" [(ngModel)]="code"></ngx-monaco-editor>
+      </div>
 
-<form (ngSubmit)="uploadDocument()" #uploadform="ngForm">
-  <button style="margin-top: 20px;" type="submit">Upload</button>
-</form>
+    </div>
+
+  </div>
+  <div class="row middlerow">
+    <div class="col-sm-12">
+      <form (ngSubmit)="uploadDocument()" #uploadform="ngForm">
+        <button style="margin-top: 20px;" type="submit">Upload</button>
+      </form>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+      <form (ngSubmit)="submitForReview()" #uploadform="ngForm">
+        <select id='peeps' name='people' [(ngModel)]="userSelect">
+          <option></option>
+          <option *ngFor="let item of userArray" [value]="item._id">
+            {{item.username}}
+          </option>
+        </select>
+        <button style="margin-top: 20px;" type="submit" [disabled]="!fileContent">Submit</button>
+      </form>
+      <p>{{message}}</p>
+    </div>
+  </div>
+</div>
