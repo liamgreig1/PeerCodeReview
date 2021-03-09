@@ -20,6 +20,7 @@
             "tsConfig": "tsconfig.app.json",
             "aot": true,
             "assets": [
+              { "glob": "**/*", "input": "node_modules/monaco-editor", "output": "assets/monaco-editor/" },
               "src/favicon.ico",
               "src/assets"
             ],
@@ -85,6 +86,7 @@
             "tsConfig": "tsconfig.spec.json",
             "karmaConfig": "karma.conf.js",
             "assets": [
+              { "glob": "**/*", "input": "node_modules/monaco-editor", "output": "assets/monaco-editor/" },
               "src/favicon.ico",
               "src/assets"
             ],
