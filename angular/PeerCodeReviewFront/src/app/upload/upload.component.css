@@ -1,6 +1,6 @@
 .middlerow{
-    text-align: center;
     padding-top: 5em;
+    text-align: center;
 }
 .toprow{
     padding-top: 5em;
@@ -8,5 +8,12 @@
 ngx-monaco-editor {
     height: calc(100% - 100px);
     width: 100%;
-    padding: 40px;
   }
+.uploadText, .uploadButton{
+    display: inline-block;
+    vertical-align: middle;
+    margin: 20px 0;
+}
+.uploadText{
+    padding-right: 10px;
+}

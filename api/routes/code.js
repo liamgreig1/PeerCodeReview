@@ -30,6 +30,11 @@ router.post(
       res.status(413).json({ success: false, msg: "File size exceeds 20kb." });
     }
 
+    if(reviewer == null || reviewer == "") {
+      upload = false;
+      res.status(403).json({ success: false, msg: "Please select reviewer"});
+    }
+
     User.findOne({ _id: author }).then((user) => {
       if (!user) {
         upload = false;

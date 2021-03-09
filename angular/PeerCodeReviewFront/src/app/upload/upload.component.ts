@@ -22,7 +22,9 @@ export class UploadComponent implements OnInit {
   userSelect: any;
   fileContent: any = "";
   message: String;
+  fileMessage: String;
   language: String = "";
+  randomUser: any;
 
   editorOptions = { theme: 'vs-dark', language: this.language };
   code: any;
@@ -37,7 +39,6 @@ export class UploadComponent implements OnInit {
         // If the user authenticates successfully, we need to store the JWT returned in localStorage
         this.users = response;
         this.userArray = this.users.msg
-        // console.log(response);
       },
 
       // If there is an error
@@ -53,6 +54,10 @@ export class UploadComponent implements OnInit {
 
   handleFileInput(files: FileList) {
     this.fileToUpload = files.item(0);
+    if (this.fileToUpload.size>20480) {
+      this.fileToUpload = null;
+      this.fileMessage = "File size too big"
+    }
   }
 
   uploadDocument() {
@@ -87,24 +92,30 @@ export class UploadComponent implements OnInit {
       status: false
     };
 
+
     this.http.post('http://localhost:3000/code/upload', reqObject, { headers: headers }).subscribe(
       // The response data
       (response) => {
         // If the user authenticates successfully, we need to store the JWT returned in localStorage
         console.log(response);
+        this.router.navigate(['/home']);
         this.message = "File uploaded successfully.";
       },
 
       // If there is an error
       (error) => {
         console.log(error);
-        this.message = error.message;
+        this.message = error.error.msg;
+
       },
       // When observable completes
       () => {
         console.log('done!');
       }
     )
+
+
+
   }
 
 }

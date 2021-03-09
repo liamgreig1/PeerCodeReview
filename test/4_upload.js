@@ -302,4 +302,42 @@ describe("Upload", () => {
         });
     });
   });
+  describe("/POST upload", () => {
+    it("should test exceptional upload to see if no reviewer has been selected", (done) => {
+      let user = {
+        username: "lgreig214",
+        password: "P4sSw0Rd!",
+        score: 0,
+      };
+      chai
+        .request(server)
+        .post("/user/login")
+        .send(user)
+        .end((err, res) => {
+          res.body.should.be.a("object");
+          res.body.should.have.property("success").eql(true);
+          var token = res.body.token;
+          var decoded = jwt_decode(token);
+          let code = {
+            filename: "HelloWorld.java",
+            filesize: 117,
+            content:
+              'class HelloWorld {public static void main(String[] args) {System.out.println("Hello, World!"); }}',
+            author: decoded.sub,
+            reviewer: "",
+            status: false,
+          };
+          chai
+            .request(server)
+            .post("/code/upload")
+            .set("Authorization", token)
+            .send(code)
+            .end((err, res) => {
+              res.body.should.be.a("object");
+              res.body.should.have.property("success").eql(false);
+              done();
+            });
+        });
+    });
+  });
 });
