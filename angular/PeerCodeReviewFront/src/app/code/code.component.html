@@ -11,7 +11,10 @@
     </div>
     <div class="col-sm-3">
       <h1>Comments</h1>
-
+      <form (ngSubmit)="onAddComment()" #commentform="ngForm">
+        <textarea type="textarea" cols="30" id="inputComment" name="comment" placeholder="Comment" ngModel></textarea>
+        <button class="btn" type="submit">Add Comment</button>
+      </form>
     </div>
   </div>
 </div>

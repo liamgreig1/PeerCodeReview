@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from "@angular/router";
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AuthService } from '../services/auth.service';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-code',
@@ -18,6 +19,7 @@ export class CodeComponent implements OnInit {
   filetype;
   language = null;
 
+  @ViewChild('commentform', { static: false }) commentForm: NgForm;
   constructor(private router: Router, private activatedRoute: ActivatedRoute, private http: HttpClient, private authService: AuthService) {
     this.codeid = this.router.getCurrentNavigation().extras.state;
   }
@@ -56,6 +58,38 @@ export class CodeComponent implements OnInit {
     )
 
     console.log(this.code)
+  }
+
+  onAddComment(){
+    const comment = this.commentForm.value.comment;
+
+    const headers = new HttpHeaders({ 'Content-type': 'application/json' });
+
+    const reqObject = {
+      comment: comment,
+      userid: this.authService.getUserId(),
+      codeid: this.codeid
+    };
+
+    this.http.post('http://localhost:3000/code/comment/addComment', reqObject, { headers: headers }).subscribe(
+
+      // The response data
+      (response) => {
+        console.log(response);
+      },
+
+      // If there is an error
+      (error) => {
+        // this.message = error.error.msg;
+        console.log(error);
+      },
+
+      // When observable completes
+      () => {
+        console.log('done!');
+      }
+
+    );
   }
 
 }
