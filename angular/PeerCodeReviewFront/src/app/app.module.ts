@@ -23,6 +23,9 @@ import { AuthService } from './services/auth.service';
 import { AuthInterceptor } from './interceptors/auth-interceptor';
 import { AuthGuard } from './auth.guard';
 import { MonacoEditorModule } from '@materia-ui/ngx-monaco-editor';
+import { MyCodeListComponent } from './my-code-list/my-code-list.component';
+import { CodeComponent } from './code/code.component';
+import { MyCodeReviewListComponent } from './my-code-review-list/my-code-review-list.component';
 
 
 
@@ -32,19 +35,25 @@ const appRoutes: Routes = [
   { path: 'protected', component: ProtectedComponentComponent, canActivate: [AuthGuard] },
   { path: 'home', component: HomeMenuComponent, canActivate: [AuthGuard] },
   { path: 'upload', component: UploadComponent, canActivate: [AuthGuard] },
+  { path: 'mycode', component: MyCodeListComponent, canActivate: [AuthGuard]},
+  { path: 'code', component: CodeComponent, canActivate: [AuthGuard]},
+  { path: 'review', component: MyCodeReviewListComponent, canActivate: [AuthGuard]},
   { path: '**', redirectTo: '' }
 ];
 
 @NgModule({
-  declarations: [
+  declarations: [			
     AppComponent,
     RegisterComponent,
     LoginComponent,
     ProtectedComponentComponent,
     NavbarComponent,
     HomeMenuComponent,
-    UploadComponent
-  ],
+    UploadComponent,
+    MyCodeListComponent,
+    CodeComponent,
+    MyCodeReviewListComponent
+   ],
   imports: [
     BrowserModule,
     FormsModule,

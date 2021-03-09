@@ -14,7 +14,7 @@
         <p class="text-danger">{{fileMessage}}</p>
       </div>
       <div style="height: 500px">
-        <ngx-monaco-editor [options]="editorOptions" [(ngModel)]="code"></ngx-monaco-editor>
+        <ngx-monaco-editor [options]="{ theme: 'vs-dark', language: this.language }" [(ngModel)]="code"></ngx-monaco-editor>
       </div>
 
     </div>
@@ -29,7 +29,7 @@
     </div>
     <div class="col-sm-6">
       <form (ngSubmit)="submitForReview()" #uploadform="ngForm">
-        <select id='peeps' name='people' [(ngModel)]="userSelect">
+        <select id='users' name='user' [(ngModel)]="userSelect">
           <option value="">Select Reviewer</option>
           <option *ngFor="let item of userArray" [value]="item._id">
             {{item.username}}
