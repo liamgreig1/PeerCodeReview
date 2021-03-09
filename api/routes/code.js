@@ -71,4 +71,95 @@ router.post(
   }
 );
 
+/**
+ * get list of code
+ * @param {object} req Json object from route
+ * @param {object} res Json object which contains outcome of request
+ * @param {function} next If login fails then the next function keeps
+ *  the request moving and doesn't just let the request timeout or hang for a long time.
+ */
+// http://localhost:3000/code/list
+router.get(
+  "/list",
+  passport.authenticate("jwt", { session: false }),
+  (req, res, next) => {
+    Code.find({}).then((code) => {
+      res.status(200).json({ success: true, codes: code });
+    });
+  });
+
+/**
+ * get list of author code
+ * @param {object} req Json object from route
+ * @param {object} res Json object which contains outcome of request
+ * @param {function} next If login fails then the next function keeps
+ *  the request moving and doesn't just let the request timeout or hang for a long time.
+ */
+// http://localhost:3000/code/listauthor
+router.post(
+  "/listauthor",
+  passport.authenticate("jwt", { session: false }),
+  (req, res, next) => {
+
+    var authorId = sanitize(req.body._id);
+
+    Code.find({author: authorId}).then((code) => {
+      if (code) {
+        res.status(200).json({ success: true, codes: code });
+      }else{
+        res.status(400).json({ success: false, msg: "No code uploaded yet" });
+      }
+      
+    });
+  });
+
+/**
+ * get list of reviewer code
+ * @param {object} req Json object from route
+ * @param {object} res Json object which contains outcome of request
+ * @param {function} next If login fails then the next function keeps
+ *  the request moving and doesn't just let the request timeout or hang for a long time.
+ */
+// http://localhost:3000/code/listreviewer
+router.post(
+  "/listreviewer",
+  passport.authenticate("jwt", { session: false }),
+  (req, res, next) => {
+
+    var reviewerid = sanitize(req.body._id);
+
+    Code.find({reviewer: reviewerid}).then((code) => {
+      if(code){
+      res.status(200).json({ success: true, codes: code });
+      }else{
+        res.status(400).json({ success: false, msg: "No code assigned to you yet" });
+      }
+    });
+  });
+
+/**
+ * get requested code
+ * @param {object} req Json object from route
+ * @param {object} res Json object which contains outcome of request
+ * @param {function} next If login fails then the next function keeps
+ *  the request moving and doesn't just let the request timeout or hang for a long time.
+ */
+// http://localhost:3000/code/code
+router.post(
+  "/code",
+  passport.authenticate("jwt", { session: false }),
+  (req, res, next) => {
+
+    var _id = sanitize(req.body._id);
+
+    Code.findOne({_id: _id}).then((code) => {
+      if(code){
+      res.status(200).json({ success: true, codes: code });
+      }else{
+        res.status(400).json({ success: false, msg: "Code does not exist" });
+      }
+    });
+  });
+
+
 module.exports = router;

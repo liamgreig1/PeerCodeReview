@@ -15,8 +15,6 @@ export class UploadComponent implements OnInit {
   constructor(private http: HttpClient, private authService: AuthService, private router: Router, private fb: FormBuilder) { }
 
   fileToUpload: File = null;
-
-
   users: any;
   userArray: any
   userSelect: any;
