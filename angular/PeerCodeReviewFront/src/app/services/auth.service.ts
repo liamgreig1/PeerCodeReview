@@ -8,7 +8,7 @@ export class AuthService {
     constructor() {}
           
     setLocalStorage(responseObj) {
-        const expiresAt = moment().add(responseObj.expiresIn);
+        const expiresAt = moment().add(15,'m').toDate();
 
         localStorage.setItem('id_token', responseObj.token);
         localStorage.setItem("expires_at", JSON.stringify(expiresAt.valueOf()) );
@@ -46,19 +46,5 @@ export class AuthService {
         else{
             return true;
         }
-    }
-
-    isTokenActive(){
-        // const exp = JSON.parse(localStorage.getItem("expires_at"));
-
-        // console.log("E",exp);
-        // console.log("N",Date.now());
-        // console.log(Date.now() >= exp * 1000);
-        // if (Date.now() >= exp * 1000) {
-        //     return true;
-        // }else{
-        //     return false;
-        // }
-        return true;
     }
 }
