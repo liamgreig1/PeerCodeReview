@@ -13,7 +13,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
-import { ProtectedComponentComponent } from './protected-component/protected-component.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { HomeMenuComponent } from './home-menu/home-menu.component';
 import { UploadComponent } from './upload/upload.component';
@@ -35,7 +34,6 @@ import { RubricDialogComponent } from './rubric-dialog/rubric-dialog.component';
 const appRoutes: Routes = [
   { path: '', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-  { path: 'protected', component: ProtectedComponentComponent, canActivate: [AuthGuard] },
   { path: 'home', component: HomeMenuComponent, canActivate: [AuthGuard] },
   { path: 'upload', component: UploadComponent, canActivate: [AuthGuard] },
   { path: 'mycode', component: MyCodeListComponent, canActivate: [AuthGuard]},
@@ -49,7 +47,6 @@ const appRoutes: Routes = [
     AppComponent,
     RegisterComponent,
     LoginComponent,
-    ProtectedComponentComponent,
     NavbarComponent,
     HomeMenuComponent,
     UploadComponent,
