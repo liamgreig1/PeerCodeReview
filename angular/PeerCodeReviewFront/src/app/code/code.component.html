@@ -4,10 +4,11 @@
   <div class="row">
     <div class="col-sm-9 toprow">
       <h1>Code Review - {{filename}}</h1>
-      <div style="height: 500px">
+      <div style="height: 500px; padding-bottom:10px;">
         <ngx-monaco-editor [options]="{ theme: 'vs-dark', language: this.language }" [(ngModel)]="codeContent">
         </ngx-monaco-editor>
       </div>
+      <button class="btn" (click)="openDialog()">View Rubric</button>
     </div>
     <div class="col-sm-3">
       <h1>Comments</h1>

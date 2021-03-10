@@ -3,6 +3,8 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AuthService } from '../services/auth.service';
 import { NgForm } from '@angular/forms';
+import {MatDialog} from '@angular/material/dialog';
+import { RubricDialogComponent } from '../rubric-dialog/rubric-dialog.component';
 
 @Component({
   selector: 'app-code',
@@ -19,11 +21,15 @@ export class CodeComponent implements OnInit {
   @ViewChild('commentform', { static: false }) commentForm: NgForm;
   @ViewChild('comment') con: ElementRef;
   thecomment = { clear: '' };
-  constructor(private router: Router, private activatedRoute: ActivatedRoute, private http: HttpClient, private authService: AuthService) {
+  constructor(private router: Router, private activatedRoute: ActivatedRoute, private http: HttpClient, private authService: AuthService, public dialog: MatDialog) {
     this.codeid = this.router.getCurrentNavigation().extras.state;
   }
 
   editorOptions = { theme: 'vs-dark', language: this.language };
+
+  openDialog() {
+    const dialogRef = this.dialog.open(RubricDialogComponent);
+  }
 
   ngOnInit() {
     const reqObject = {

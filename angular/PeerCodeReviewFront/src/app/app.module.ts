@@ -17,6 +17,7 @@ import { ProtectedComponentComponent } from './protected-component/protected-com
 import { NavbarComponent } from './navbar/navbar.component';
 import { HomeMenuComponent } from './home-menu/home-menu.component';
 import { UploadComponent } from './upload/upload.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 import { AuthService } from './services/auth.service';
@@ -26,6 +27,8 @@ import { MonacoEditorModule } from '@materia-ui/ngx-monaco-editor';
 import { MyCodeListComponent } from './my-code-list/my-code-list.component';
 import { CodeComponent } from './code/code.component';
 import { MyCodeReviewListComponent } from './my-code-review-list/my-code-review-list.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { RubricDialogComponent } from './rubric-dialog/rubric-dialog.component';
 
 
 
@@ -42,7 +45,7 @@ const appRoutes: Routes = [
 ];
 
 @NgModule({
-  declarations: [			
+  declarations: [				
     AppComponent,
     RegisterComponent,
     LoginComponent,
@@ -52,7 +55,8 @@ const appRoutes: Routes = [
     UploadComponent,
     MyCodeListComponent,
     CodeComponent,
-    MyCodeReviewListComponent
+    MyCodeReviewListComponent,
+    RubricDialogComponent
    ],
   imports: [
     BrowserModule,
@@ -61,7 +65,9 @@ const appRoutes: Routes = [
     AppRoutingModule,
     RouterModule.forRoot(appRoutes, { useHash: true }),
     HttpClientModule,
-    MonacoEditorModule
+    MonacoEditorModule,
+    MatDialogModule,
+    BrowserAnimationsModule
   ],
   providers: [
     AuthService,
@@ -71,6 +77,7 @@ const appRoutes: Routes = [
       multi: true
     }
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [RubricDialogComponent]
 })
 export class AppModule { }
