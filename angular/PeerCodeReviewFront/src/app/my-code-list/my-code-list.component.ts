@@ -30,9 +30,6 @@ export class MyCodeListComponent implements OnInit {
       (response) => {
         this.codes = response;
         this.listofcode = this.codes.codes
-        console.log(userId)
-        console.log(response);
-        console.log(this.listofcode)
       },
 
       // If there is an error
@@ -41,7 +38,6 @@ export class MyCodeListComponent implements OnInit {
       },
       // When observable completes
       () => {
-        console.log('done!');
       }
     )
   }

@@ -36,7 +36,6 @@ export class RegisterComponent implements OnInit {
         // The response data
         (response) => {
           this.router.navigate(['/login']);
-          console.log(response['msg']);
         },
 
         // If there is an error
@@ -47,7 +46,6 @@ export class RegisterComponent implements OnInit {
 
         // When observable completes
         () => {
-          console.log('done!');
         }
 
       );

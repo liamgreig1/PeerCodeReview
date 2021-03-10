@@ -26,7 +26,6 @@ export class UploadComponent implements OnInit {
 
   editorOptions = { theme: 'vs-dark', language: this.language };
   code: any;
-  originalCode: string = 'function x() { // TODO }';
 
   ngOnInit() {
 
@@ -34,7 +33,6 @@ export class UploadComponent implements OnInit {
     this.http.get('http://localhost:3000/user/listofusers', { headers: headers }).subscribe(
       // The response data
       (response) => {
-        // If the user authenticates successfully, we need to store the JWT returned in localStorage
         this.users = response;
         this.userArray = this.users.msg
       },
@@ -45,7 +43,6 @@ export class UploadComponent implements OnInit {
       },
       // When observable completes
       () => {
-        console.log('done!');
       }
     )
   }
@@ -66,8 +63,6 @@ export class UploadComponent implements OnInit {
       this.code = fileReader.result;
       var filetype = this.fileToUpload.name.split(".");
       this.language = filetype[1];
-      console.log(this.language);
-      console.log(fileReader.result);
     }
     fileReader.readAsText(this.fileToUpload);
   }
@@ -77,7 +72,6 @@ export class UploadComponent implements OnInit {
     const filesize = this.fileToUpload.size;
     const authorId = this.authService.getUserId();
     const reviewer = this.userSelect;
-    console.log(this.fileContent)
 
     const headers = new HttpHeaders({ 'Content-type': 'application/json' });
 
@@ -94,8 +88,6 @@ export class UploadComponent implements OnInit {
     this.http.post('http://localhost:3000/code/upload', reqObject, { headers: headers }).subscribe(
       // The response data
       (response) => {
-        // If the user authenticates successfully, we need to store the JWT returned in localStorage
-        console.log(response);
         this.router.navigate(['/home']);
         this.message = "File uploaded successfully.";
       },
@@ -108,7 +100,6 @@ export class UploadComponent implements OnInit {
       },
       // When observable completes
       () => {
-        console.log('done!');
       }
     )
 
