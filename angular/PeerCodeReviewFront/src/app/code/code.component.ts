@@ -51,7 +51,6 @@ export class CodeComponent implements OnInit {
       },
       // When observable completes
       () => {
-        console.log('done!');
       }
     );
 
@@ -75,7 +74,6 @@ export class CodeComponent implements OnInit {
       },
       // When observable completes
       () => {
-        console.log('done!');
       }
     )
   }
@@ -91,8 +89,6 @@ export class CodeComponent implements OnInit {
       codeid: this.codeid,
       username: this.username
     };
-
-    console.log(this.username);
 
     this.http.post('http://localhost:3000/code/comment/addComment', reqObject, { headers: headers }).subscribe(
 
@@ -110,7 +106,6 @@ export class CodeComponent implements OnInit {
 
       // When observable completes
       () => {
-        console.log('done!');
       }
 
     );
@@ -128,7 +123,6 @@ export class CodeComponent implements OnInit {
       (response) => {
         this.username = response;
         this.username = this.username.username;
-        console.log(this.username);
       },
 
       // If there is an error
@@ -139,7 +133,6 @@ export class CodeComponent implements OnInit {
 
       // When observable completes
       () => {
-        console.log('done!');
       }
 
     );

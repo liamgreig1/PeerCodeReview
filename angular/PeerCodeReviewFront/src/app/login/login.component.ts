@@ -34,7 +34,6 @@ export class LoginComponent implements OnInit {
         // If the user authenticates successfully, we need to store the JWT returned in localStorage
         this.authService.setLocalStorage(response);
         this.router.navigate(['/home']);
-        // console.log(response);
       },
 
       // If there is an error
@@ -45,7 +44,6 @@ export class LoginComponent implements OnInit {
 
       // When observable completes
       () => {
-        console.log('done!');
       }
 
     );

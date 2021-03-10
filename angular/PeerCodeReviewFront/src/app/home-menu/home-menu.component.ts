@@ -27,7 +27,6 @@ export class HomeMenuComponent implements OnInit {
 
       // The response data
       (response) => {
-        // If the user authenticates successfully, we need to store the JWT returned in localStorage
         this.user = response['username'];
       },
 
@@ -40,7 +39,7 @@ export class HomeMenuComponent implements OnInit {
 
       // When observable completes
       () => {
-        console.log('done!');
+
       }
 
     );

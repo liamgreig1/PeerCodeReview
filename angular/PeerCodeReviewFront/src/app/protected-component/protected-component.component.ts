@@ -21,7 +21,6 @@ export class ProtectedComponentComponent implements OnInit {
       (response) => {
         if (response) {
           this.message = response['msg'][3]['username'];
-          console.log(response['msg']);
         }
       },
 
@@ -32,7 +31,6 @@ export class ProtectedComponentComponent implements OnInit {
       }, 
 
       () => {
-        console.log('HTTP request done');
       }
     );
   }
@@ -57,7 +55,6 @@ export class ProtectedComponentComponent implements OnInit {
       }, 
 
       () => {
-        console.log('HTTP request done');
       }
     );
   }
