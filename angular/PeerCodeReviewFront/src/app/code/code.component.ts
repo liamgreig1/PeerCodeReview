@@ -16,6 +16,7 @@ export class CodeComponent implements OnInit {
   codeid;code;codeContent;filename;filesize;filetype;
   username;
   comments;
+  message: String;
   language = null;
 
   @ViewChild('commentform', { static: false }) commentForm: NgForm;
@@ -137,5 +138,29 @@ export class CodeComponent implements OnInit {
 
     );
 
+  }
+  changeStatus(){
+    const headers = new HttpHeaders({ 'Content-type': 'application/json' });
+    const reqObject = {
+      _id: this.codeid
+    };
+    this.http.post('http://localhost:3000/code/updatestatus', reqObject, { headers: headers }).subscribe(
+
+      // The response data
+      (response) => {
+        this.message = "Review Completed"
+      },
+
+      // If there is an error
+      (error) => {
+        // this.message = error.error.msg;
+        console.log(error);
+      },
+
+      // When observable completes
+      () => {
+      }
+
+    );
   }
 }

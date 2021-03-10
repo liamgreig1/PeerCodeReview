@@ -161,5 +161,29 @@ router.post(
     });
   });
 
+  /**
+ * get requested code
+ * @param {object} req Json object from route
+ * @param {object} res Json object which contains outcome of request
+ * @param {function} next If login fails then the next function keeps
+ *  the request moving and doesn't just let the request timeout or hang for a long time.
+ */
+// http://localhost:3000/code/updatestatus
+router.post(
+  "/updatestatus",
+  passport.authenticate("jwt", { session: false }),
+  (req, res, next) => {
+
+    var _id = sanitize(req.body._id);
+
+    Code.findByIdAndUpdate({_id: _id},{status:true}).then((code) => {
+      if(code){
+          res.status(200).json({ success: true });
+      }else{
+        res.status(400).json({ success: false, msg: "Code does not exist" });
+      }
+    });
+  });
+
 
 module.exports = router;
