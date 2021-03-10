@@ -18,10 +18,11 @@ router.post(
   passport.authenticate("jwt", { session: false }),
   (req, res, next) => {
     var addComment = true;
-    
+
     var comment = sanitize(req.body.comment);
-    var username = sanitize(req.body.userid);
+    var userid = sanitize(req.body.userid);
     var code = sanitize(req.body.codeid);
+    var username = sanitize(req.body.username);
 
     Code.findOne({ _id: code }).then((code) => {
       if (!code) {
@@ -29,15 +30,15 @@ router.post(
         res.status(403).json({ success: false, msg: "Code does not exist" });
       }
 
-      if (code.reviewer != username) {
-        addComment = false;
-        res
-          .status(403)
-          .json({
-            success: false,
-            msg: "You have not been assigned to review this code",
-          });
-      }
+      // if (code.author != userid || code.reviewer != userid) {
+      //   addComment = false;
+      //   res
+      //     .status(403)
+      //     .json({
+      //       success: false,
+      //       msg: "You have not been assigned to review this code",
+      //     });
+      // }
 
       if (comment.length > 120) {
         addComment = false;
@@ -49,7 +50,8 @@ router.post(
       if (addComment == true) {
         var newComment = {
           comment: comment,
-          user_id: username,
+          user_id: userid,
+          username: username,
         };
         try {
           Code.updateOne(
@@ -66,4 +68,20 @@ router.post(
   }
 );
 
-module.exports = router;
+// http://localhost:3000/code/comment/listofcomment
+router.post(
+  "/listofcomment",
+  passport.authenticate("jwt", { session: false }),
+  (req, res, next) => {
+    var code = sanitize(req.body._id);
+
+    Code.findOne({ _id: code }).then((code) => {
+      if (code){
+        res.status(200).json({ success: true, comments: code.comments });
+      }else{
+        res.status(400).json({ success: false, msg: "Code does not exist" });
+      }
+    });
+  });
+
+    module.exports = router;

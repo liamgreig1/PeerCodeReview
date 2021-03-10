@@ -11,7 +11,19 @@
     </div>
     <div class="col-sm-3">
       <h1>Comments</h1>
-
+      <form (ngSubmit)="onAddComment()" #commentform="ngForm">
+        <textarea #comment type="textarea" cols="30" id="inputComment" name="comment" placeholder="Comment" ngModel>{{thecomment.clear}}</textarea>
+        <button class="btn" type="submit">Add Comment</button>
+      </form>
+      <div class="container p-3 my-3 border" *ngFor="let item of comments">
+        <div class="row">
+          <div class="col-sm-12">
+              <p>Comment: {{item.comment}}</p>
+              <p>User: {{item.username}}</p>
+              <p>Date added: {{item.timestamp}}</p>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
