@@ -5,6 +5,7 @@ var Schema = mongoose.Schema;
 var CommentSchema = new Schema({
     comment: String,
     user_id: String,
+    username: String,
     timestamp: { type: Date, default: Date.now }
 })
 
