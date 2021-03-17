@@ -13,11 +13,14 @@ import { RubricDialogComponent } from '../rubric-dialog/rubric-dialog.component'
 })
 export class CodeComponent implements OnInit {
 
-  codeid;code;codeContent;filename;filesize;filetype;
+  codeid;code;codeContent;filename;filesize;filetype;status;
   username;
   comments;
   message: String;
   language = null;
+  reviewerId;
+  viewScore = true;
+  
 
   @ViewChild('commentform', { static: false }) commentForm: NgForm;
   @ViewChild('comment') con: ElementRef;
@@ -45,6 +48,11 @@ export class CodeComponent implements OnInit {
         this.codeContent = this.code.codes.content;
         this.filetype = this.filename.split('.');
         this.language = this.filetype[1];
+        this.reviewerId = this.code.codes.reviewer;
+        this.status = this.code.codes.status;
+        if(this.reviewerId == this.authService.getUserId()){
+          this.viewScore = false;
+        }
       },
       // If there is an error
       (error) => {
@@ -149,6 +157,56 @@ export class CodeComponent implements OnInit {
       // The response data
       (response) => {
         this.message = "Review Completed"
+      },
+
+      // If there is an error
+      (error) => {
+        // this.message = error.error.msg;
+        console.log(error);
+      },
+
+      // When observable completes
+      () => {
+      }
+
+    );
+  }
+  increaseScore(){
+    const headers = new HttpHeaders({ 'Content-type': 'application/json' });
+    const reqObject = {
+      _id: this.reviewerId
+    };
+    this.http.post('http://localhost:3000/user/increaserep', reqObject, { headers: headers }).subscribe(
+
+      // The response data
+      (response) => {
+        this.changeStatus();
+        this.message = "Thank you for contributing"
+      },
+
+      // If there is an error
+      (error) => {
+        // this.message = error.error.msg;
+        console.log(error);
+      },
+
+      // When observable completes
+      () => {
+      }
+
+    );
+  }
+  decreaseScore(){
+    const headers = new HttpHeaders({ 'Content-type': 'application/json' });
+    const reqObject = {
+      _id: this.reviewerId
+    };
+    this.http.post('http://localhost:3000/user/decreaserep', reqObject, { headers: headers }).subscribe(
+
+      // The response data
+      (response) => {
+        this.changeStatus();
+        this.message = "Thank you for contributing"
       },
 
       // If there is an error

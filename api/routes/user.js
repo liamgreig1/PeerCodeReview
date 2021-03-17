@@ -117,7 +117,7 @@ router.post("/register", function (req, res, next) {
         username: pUser,
         hash: hash,
         salt: salt,
-        reputationscore: pScore,
+        reputationscore: 1,
       });
       try {
         newUser.save().then((user) => {
@@ -183,17 +183,70 @@ router.get(
  * @param {object} req Json object from route
  */
 // http://localhost:3000/user/protected
-router.get(
-  "/protected",
+router.get("/protected", passport.authenticate("jwt", { session: false }), (req, res, next) => {
+  res.status(202).json({ success: true, msg: "You are successfully authenticated to this route!" });
+}
+);
+
+/**
+ * Provides means of increasing the reviewers score by 1
+ * @param {object} req Json object from route
+ */
+// http://localhost:3000/user/increaserep
+router.post(
+  "/increaserep",
   passport.authenticate("jwt", { session: false }),
   (req, res, next) => {
-    res
-      .status(202)
-      .json({
-        success: true,
-        msg: "You are successfully authenticated to this route!",
-      });
-  }
-);
+
+    var pUserId = sanitize(req.body._id);
+    var increaseRep = true;
+    User.findOne({ _id: pUserId }).then(user => {
+      if (!user) {
+        addComment = false;
+        res.status(403).json({ success: false, msg: "User does not exist" });
+      }
+      if (increaseRep == true) {
+        try {
+          User.updateOne({ _id: pUserId }, { $inc: { reputationscore: 1 } }).then(user => {
+            res.status(200).json({ success: true, msg: "Users Reputation has incrased" })
+          });
+        }catch (err){
+          res.status(400).json({ success: false, msg: "Issue did not increment by 1" })
+        }
+        
+        
+      }
+    });
+  });
+/**
+ * Provides means of decreasing the reviewers score by 1
+ * @param {object} req Json object from route
+ */
+// http://localhost:3000/user/decreaserep
+router.post(
+  "/decreaserep",
+  passport.authenticate("jwt", { session: false }),
+  (req, res, next) => {
+
+    var pUserId = sanitize(req.body._id);
+    var increaseRep = true;
+    User.findOne({ _id: pUserId }).then(user => {
+      if (!user) {
+        addComment = false;
+        res.status(403).json({ success: false, msg: "User does not exist" });
+      }
+      if (increaseRep == true) {
+        try {
+          User.updateOne({ _id: pUserId }, { $inc: { reputationscore: -1 } }).then(user => {
+            res.status(200).json({ success: true, msg: "Users Reputation has decrased" })
+          });
+        }catch (err){
+          res.status(400).json({ success: false, msg: "Issue did not increment by 1" })
+        }
+        
+        
+      }
+    });
+  });
 
 module.exports = router;
