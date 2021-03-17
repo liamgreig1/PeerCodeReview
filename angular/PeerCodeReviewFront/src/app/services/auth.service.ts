@@ -8,7 +8,7 @@ export class AuthService {
     constructor() {}
           
     setLocalStorage(responseObj) {
-        const expiresAt = moment().add(15,'m').toDate();
+        const expiresAt = moment().add(1,'d').toDate();
 
         localStorage.setItem('id_token', responseObj.token);
         localStorage.setItem("expires_at", JSON.stringify(expiresAt.valueOf()) );
